@@ -1,0 +1,39 @@
+hosts文件路径 windows/system32/drivers/etc/
+hosts文件格式127.0.0.1 http://www.anth.com/ 即是输入后面的时候自动解析成前面的ip 前面只能是ip目测 后面不能加路径 然后打开host文件的工具要用管理员身份运行才能保存成功.
+
+环境变量是一个具有特定名字的对象，它包含了一个或者多个应用程序所将使用到的信息。例如path，当要求系统运行一个程序而没有告诉它程序所在的完整路径时，系统除了在当前目录下面寻找此程序外，还应到path中指定的路径去找。用户通过设置环境变量，来更好的运行进程。
+
+忽略浏览器缓存刷新ctrl+F5
+
+windows服务器 远程连接 mstscv 在设置里面选中自己本地磁盘驱动器 然后叜远程服务器的我的电脑里面有自己本地的磁盘
+windows CMD 中直接输入盘符如 c: 不带/即可进入该路径
+
+netstat –an  来查看机器有哪些端口在监听，如果发现有异常端口监听，则可以关闭该端
+netstat –anb 
+
+通过改命令我们可以发现是哪个程序在监听该端口，从而关闭.
+apache服务器卸载后，一定要记得右键我的电脑——管理——服务和应用程序——服务-检查里面没有apache服务。如果有，apache再装是装不上的
+
+4.虚拟目录的问题。  第二天有个问题是配置虚拟主机，记得区分。
+apache所在磁盘(比如c:分区)空间的问题,我们能不能把web应用放在另外一个分区(比如d:分区),同样让apache去管理呢?这就是虚拟目录的问题。非常重要的知识点，必须掌握。
+1）	配置虚拟目录，在apache的conf目录下httpd.conf 的<IfModule dir_module>节点后（这节结束位置后） 
+添加如下代码:
+
+#配置虚拟目录
+<IfModule dir_module>
+    #direcotory相当于是欢迎页面
+    DirectoryIndex index.html index.htm index.php
+    #你的站点别名
+    Alias /myblog "D:/myblog"
+   <Directory d:/myblog>
+   #这是访问权限设置
+   Order allow,deny
+   Allow from all
+   </Directory>	
+</IfModule>
+2）在apache的conf目录下httpd.conf里面，注销documentroot路径，通过#，如下所示：
+#DocumentRoot "C:/Program Files/Apache Software Foundation/Apache2.2/htdocs"备注：韩老师在第三天后的课程中建议使用该方法，以免产生错误。
+3）apache服务器要重新启动，输入相应域名，进行测试 成功
+PHP_INT_SIZE 
+可以显示我们自己的机器，一个整数用几个字节表示
+PHP_INT_MAX 可以显示int 最大的数有多少

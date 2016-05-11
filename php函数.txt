@@ -1,0 +1,12 @@
+取时分秒的字符串用 strftime('%X',time())
+php 二位数组排序  array_multisort(需排序的列组成的数组,SORT_DESC,$data总数据)
+
+php全局变量（外部变量）作用于为声明处到程序结束
+   与其他编程语言不同 函数为独立的程序片段 函数内部会覆盖外部的同名变量的能见度 未声明即为0
+	$a=1 $b=2 function demo(){echo $a+$b;} 调用demo()结果为0;
+php中不能在函数中直接调用全局（外部）变量如果要使用 要在函数内部用global声明该变量，告诉函数主体此变量是全局变量；即在上面echo之前加 global $a,$b; 那么结果即为3；
+ 系统函数的数组函数sort() shuffle()等都是引用参数的函数 所以才能改变外部变量；
+函数执行到return 后面的即不会再执行。
+	break 中断循环的执行 continue 跳过此次循环 跳转到循环条件出开始下次循环 exit=exit()=die() 退出脚本；
+	回调函数call_user_func_array(要调用的函数名字符串,数组(参数列表 会一次传给该函数));
+file_get_contents('test.txt')  file_put_contents('test.txt'.'写入的字符串');

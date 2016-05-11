@@ -1,0 +1,32 @@
+$summary = $info['summary'];
+		$summary_a = msubstr($summary,0,188,'utf-8',true);
+		if($summary == $summary_a)
+		{
+			$flag = 1;
+		}
+		else
+		{
+			$flag = 2;
+			$info['summary_a'] = $summary_a;
+		}
+
+
+#more_box {position:absolute;z-index:100;top:40px;background:#fff;border:2px solid #ccc;width:515px;height:auto;display:none;}
+#more_close{float:right;width:22px;height:22px;background:url(../images/close.png) no-repeat;cursor:pointer;}
+#more_box .more_content{float:left;width:480px;padding:0px 15px 20px 20px;text-indent:30px;line-height:23px;color:#666;}
+
+<div id="more_box">
+                <div id="more_close" onclick="close_more()"></div>
+                <div class="more_content">{$info.summary}</div>
+                </div>
+                <script>
+                function more_open(){
+                var mo_op=document.getElementById("more_box");
+                mo_op.style.display="block";
+                }
+                function close_more(){
+                var mo_op=document.getElementById("more_box");
+                mo_op.style.display="none";
+                }
+                </script>
+    

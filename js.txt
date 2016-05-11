@@ -1,0 +1,337 @@
+es5-shim的作用：就给傻逼浏览器做兼容性，使得傻逼浏览器可以支持一些 es5 的 api 
+Date.js is an open-source JavaScript Date Library用来解析时间
+DOM文档对象模型 
+getElementsByTagName() 结果是数组形式 下标从0开始
+getElemntById()等都需要前面加document. 
+能省略的是bom中的window对象
+
+DOM对象方法
+方法 	描述
+getElementById() 	返回带有指定 ID 的元素。
+getElementsByTagName() 	返回包含带有指定标签名称的所有元素的节点列表（集合/节点数组）。
+getElementsByClassName() 	返回包含带有指定类名的所有元素的节点列表。
+appendChild() 	把新的子节点添加到指定节点。
+removeChild() 	删除子节点。
+replaceChild() 	替换子节点。
+insertBefore() 	在指定的子节点前面插入新的子节点。
+createAttribute() 	创建属性节点。
+createElement() 	创建元素节点。
+createTextNode() 	创建文本节点。
+getAttribute() 	返回指定的属性值。
+setAttribute() 	把指定属性设置或修改为指定的值。
+
+DOM属性是节点（HTML 元素）的值，能够获取或设置。
+
+innerHTML属性是获取元素内容的最简单方法对于获取或替换HTML内容很有用
+nodeName属性 规定节点的名称
+
+    nodeName 是只读的
+    元素节点的 nodeName 与标签名相同
+    属性节点的 nodeName 与属性名相同
+    文本节点的 nodeName 始终是 #text
+    文档节点的 nodeName 始终是 #document
+nodeValue 属性规定节点的值。
+
+	
+    元素节点的 nodeValue 是 undefined 或 null
+    文本节点的 nodeValue 是文本本身
+    属性节点的 nodeValue 是属性值
+改变HTML内容document.getElementById("p1").innerHTML="New text!";
+改变HTML样式document.getElementById("p2").style.color="blue";
+如需向 HTML DOM 添加新元素，您首先必须创建该元素，然后把它追加到已有的元素上。
+插入para在child之前	element.insertBefore(para,child);
+删除parent父元素的子元素child	parent.removeChild(child);
+找到您需要删除的子元素，然后使用 parentNode 属性来查找其父元素child.parentNode.removeChild(child);
+如需替换 HTML DOM 中的元素用 replaceChild() 方法：parent.replaceChild(para,child);
+
+
+onload 和 onunload 事件可用于处理 cookies。
+onchange 事件常用于输入字段的验证。
+onmouseover 和 onmouseout 事件可用于在鼠标指针移动到或离开元素时触发函数。
+onmousedown、onmouseup 以及 onclick 事件是鼠标点击的全部过程。首先当某个鼠标按钮被点击时，触发 onmousedown 事件，然后，当鼠标按钮被松开时，会触发 onmouseup 事件，最后，当鼠标点击完成时，触发 onclick 事件。
+
+
+getElementsByTagName() 方法返回节点列表下标号从0开始
+length 属性定义节点列表中节点的数量。
+用 length 属性来循环节点列表：
+firstChild 属性可用于访问元素的文本：
+
+通过Javascript对HTML DOM进行访问所有HTML元素被定义为对象,而编程接口则是对象方法和对象属性方法是能够执行的动作(如添加或修改元素)属性是能够获取和设置的值(如节点的名称或内容)
+setInterval() 方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。
+
+setInterval() 方法会不停地调用函数，直到 clearInterval() 被调用或窗口被关闭。由 setInterval() 返回的 ID 值可用作 clearInterval() 方法的参数。
+setTimeout() 方法用于在指定的毫秒数后调用函数或计算表达式。
+clearTimeout()
+    取消setTimeout()
+
+
+BOM浏览器对象模型
+	
+
+    window.innerHeight - 浏览器窗口的内部高度
+    window.innerWidth - 浏览器窗口的内部宽度
+ 	HTML DOM 的 document 也是 window 对象的属性之一：
+
+	window.document.getElementById("header");等于document.getElementById("header");
+
+close()只有通过 JavaScript 代码打开的窗口才能够由 JavaScript 代码关闭。这阻止了恶意的脚本终止用户的浏览器
+
+window.open(URL,name,features,replace)
+focus() 把键盘焦点给予一个窗口 
+blur() 把键盘焦点从顶层窗口移开。 
+ window.resizeTo(500,300)调整窗口大小
+兼容性var w=window.innerWidth|| document.documentElement.clientWidth|| document.body.clientWidth;
+
+var h=window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
+
+
+    window.open() - 打开新窗口
+    window.close() - 关闭当前窗口
+    window.moveTo() - 移动当前窗口
+    window.resizeTo() - 调整当前窗口的尺寸
+
+window.screen 对象在编写时可以不使用 window 这个前缀。
+	screen.availWidth - 可用的屏幕宽度
+	screen.availHeight - 可用的屏幕高度
+
+window.location 对象用于获得当前页面的地址 (URL)，并把浏览器重定向到新的页面
+
+    location.hostname 返回 web 主机的域名
+    location.pathname 返回当前页面的路径和文件名
+    location.port 返回 web 主机的端口 （80 或 443）
+    location.protocol 返回所使用的 web 协议（http:// 或 https://）
+location.href 属性返回当前页面的 URL
+location.assign() 方法加载新的文档。window.location.assign("http://www.w3school.com.cn")
+Window History
+    history.back() - 与在浏览器点击后退按钮相同
+    history.forward() - 与在浏览器中点击按钮向前相同
+alert("再次向您问好！在这里，我们向您演示" + '\n' + "如何向警告框添加折行。")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+onclick="return confirm('你确定要删除吗');">删除</a> 用于弹出确定取消的警告
+onclick="del_col({$col.cid})" 
+<script type="text/javascript">
+	function del_col(cid)
+	{
+		if(confirm("确定要删除该栏目吗？"))
+		{
+			window.location.href = '__APP__/Cms/Column/col_delete/id/' + parseInt(cid);
+		}
+	}
+</script> 效果同上
+
+onmouseover="show(this)" 传入本对象
+function show(obj){
+ys=obj.bgColor;
+obj.bgColor="red";
+}
+
+javascript严格区分大小写
+function show1(obj){
+		obj.bgColor=ys;
+	
+	} bgColor C要大写
+循环执行
+<img src="1.jpg" alt="" id="pic"/>
+		
+<script type="text/javascript">
+			
+window.clearInterval(ds);
+			
+var ds=setInterval('change()',500);
+			
+var i=1;
+			
+function change(){
+	
+	if(i==4){
+i=1;}
+	
+	pic.src=i+'.jpg';
+	
+	i++;
+	
+	}
+
+
+</script>
+
+with的用法
+<script>
+	var current_time=new Date();
+	with(current_time){
+		var strDate=getYear()+"年";
+		strDate+=getMonth()+"月";
+		'''
+		document.write(strDate);
+	}
+
+</script>
+
+编写事件处理程序
+	在事件源对象对应的HTML标签上增加一个处理事件属性,让时间属性值等于处理事件的函数名或程序代码
+	格式<tag onclick="语句块|函数名">
+window对象代表浏览器整个窗口,可利用window对象控制浏览器窗口 对window对象的属性和方法的引用可以省略window. 这个前缀 如 window.alert("你好"); 直接为 alert("你好");
+
+window方法
+	alert()显示一个带有一段消息和一个确认按钮的警告框
+	confirm()显示带有一段消息及确认取消的对话框
+	prompt()显示可提示用户输入的对话框
+	
+事件冒泡允许多个操作被集中处理（把事件处理器添加到一个父级元素上，避免把事件处理器添加到多个子级元素上），它还可以让你在对象层的不同级别捕获事件。
+	比如table里面的td 不用为每一个都绑定一个onclick 而只需要在table上绑定 然后点击事件 在点在td上的时候 会向父元素的方向冒泡 知道有程序处理这个onclidk防止太多事件绑定加载失败或者崩溃 
+
+事件捕获 让不同的对象同时捕获同一事件，并调用自己的专属处理程序做自己的事情，就像老板一下命令，各自员工做自己岗位上的工作去了
+//
+冒泡事件流
+当事件在某一DOM元素被触发时，例如用户在客户名字节点上点击鼠标，事件将跟随着该节点继承自的各个父节点冒泡穿过整个的DOM节点层次，直到它遇到依附有该事件类型处理器的节点，此时，该事件是onclick事件。在冒泡过程中的任何时候都可以终止事件的冒泡，在遵从W3C标准的浏览器里可以通过调用事件对象上的stopPropagation()方法，在Internet Explorer里可以通过设置事件对象的cancelBubble属性为true。如果不停止事件的传播，事件将一直通过DOM冒泡直至到达文档根。
+3捕获事件流
+事件的处理将从DOM层次的根开始，而不是从触发事件的目标元素开始，事件被从目标元素的所有祖先元素依次往下传递。在这个过程中，事件会被从文档根到事件目标元素之间各个继承派生的元素所捕获，如果事件监听器在被注册时设置了useCapture属性为true,那么它们可以被分派给这期间的任何元素以对事件做出处理；否则，事件会被接着传递给派生元素路径上的下一元素，直至目标元素。事件到达目标元素后，它会接着通过DOM节点再进行冒泡。
+
+事件冒泡就是子元素先触发然后向上找处理程序 
+捕获就是父元素先触发 向下找事件处理
+
+不是所有的事件都能冒泡
+
+blur、focus、load和unload不能像其它事件一样冒泡。事实上blur和focus可以用事件捕获而非事件冒泡的方法获得
+
+高亮层位于视框左右上下居中的位置
+先设置left值为50%，然后marginLeft设为负的高亮层宽度的一半
+
+右下角弹出信息框定位 用position:fixed;
+
+
+Highcharts 是一个用纯JavaScript编写的一个图表库, 能够很简单便捷的在web网站或是web应用程序添加有交互性的图表，
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

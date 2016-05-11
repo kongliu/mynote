@@ -1,0 +1,3 @@
+在laraval框架下面 运行 不要在app里面
+命令 不要在app里面
+composer 用windows下的自动安装

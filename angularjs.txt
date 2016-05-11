@@ -1,0 +1,16 @@
+input   的date 双向绑定 赋值的时候要先格式化 
+ $scope.item.birthdayall = new Date($scope.item.birthdayall
+控制器中的服务 没有指定的服务不要写
+ app.lazy.controller('PropertyUserListController',
+    [                      
+        '$rootScope',
+        '$scope',
+        '$modal',
+        'UserManage',
+
+        function($rootScope,$scope,$modal,UserManage)
+
+ng-if = "item.status  == 1" 变量不用{{}}
+
+未定义的response 是后台查询出错
+操作弹出框的变量的函数要卸载弹出层内 注意$scope作用域

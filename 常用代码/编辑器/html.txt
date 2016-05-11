@@ -1,0 +1,37 @@
+<td colspan="3"><textarea id="editor_id" name="content">{$article_info.content}</textarea></td>
+			<script type="text/javascript">
+			var htmlEditor = null;
+			var editorOptions = 
+			{
+				width : '643px',										// 编辑器宽度
+				height : '380px',										// 编辑器高度
+				minWidth : 643,											// 编辑器最小宽度
+				minHeight : 380,										// 编辑器最小高度
+				filterMode : false,										// 不过滤html标签
+				basePath : '__PUBLIC__/plugin/kindeditor-4.1.7/',		// 指定根路径
+				resizeType : 0,											// 不能拖动
+				pasteType : 1,											// 纯文本粘贴
+				dialogAlignType : '',									// 弹出框在编辑器中居中
+				useContextmenu : false,									// 屏蔽右键菜单
+				items : [												// 按钮配置
+					'source','preview','|','undo','redo','|','cut','copy','paste','plainpaste','wordpaste','|',
+					'insertorderedlist','insertunorderedlist','|','indent','outdent','|','subscript','superscript','|',
+					'image','multiimage','baidumap','|','selectall','clearhtml','quickformat','/',
+					'formatblock','fontname','fontsize','|','forecolor','hilitecolor','bold','italic','underline','strikethrough',
+					'lineheight','removeformat','|','justifyleft','justifycenter','justifyright','justifyfull','|',
+					'table','hr','anchor','link','unlink'],
+				allowFileUpload : false,								// 屏蔽文件上传按钮
+				allowMediaUpload : false,								// 屏蔽视音频上传按钮
+				allowFlashUpload : false,								// 屏蔽Flash上传按钮
+				allowImageUpload : true,								// 允许图片上传
+				uploadJson : '__APP__/Cms/Kindeditor/upload_img',		// 图片上传路径
+				allowFileManager : false,								// 禁用浏览远程服务器按钮
+				fileManagerJson : '',									// 指定浏览远程图片的服务器程序
+				allowImageRemote : false,								// 不显示网络图片标签
+				pagebreakHtml : '<hr style="page-break-after: always;" class="ke-pagebreak" />' // 指定分页符号(默认值)
+			};
+            // 图片上传回调函数
+            KindEditor.options.afterUpload = function(url) { alert(url); }
+            // 编辑器实例化
+            KindEditor.ready(function(K) { htmlEditor = K.create('#editor_id',editorOptions); });
+            </script>

@@ -1,0 +1,272 @@
+URL重写
+1、httpd.conf配置文件中加载了mod_rewrite.so模块
+2、AllowOverride None 将None改为 All
+3、确保URL_MODEL设置为2
+4、把下面的内容保存为.htaccess文件放到入口文件的同级目录下
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+</IfModule>
+
+使用第三方模板引擎时候下面才生效
+'TMPL_ENGINE_CONFIG'=>array(
+    'caching'=>true,
+    'template_dir'=>TMPL_PATH,
+    'cache_dir'=>TEMP_PATH,
+)
+tp自身的定界符修改是
+
+
+TMPL_L_DELIM  //模板引擎普通标签开始标记 
+TMPL_R_DELIM    //模板引擎普通标签结束标记
+
+$upload->saveRule = time().mt_rand(1,10000);上传类的命名 避免重复 可写俩函数 连接
+
+$condition = "d0020 = '".$category_info['d0020']."' and d0010 != ".$category_info['d0010'];
+sql查询是字符串的一定要组合单引号
+
+<volist name="category_list" id="vo">
+            <option value="{$vo.d0010}" <if condition="$vo.d0010 eq $category_info[d0030]"> selected="selected"</if>>{$vo.d0020}</option>
+</volist>
+循环里面非循环标签不能用点语法
+
+literal标签来防止模板标签被解析
+OMG对象关系映射
+目前数据库是关系型数据库  ORM 主要是把数据库中的关系数据映射称为程序中的对象
+如果你的应用有大量的SQL查询需求，那么可以开启SQL解析缓存以减少SQL解析提高性能。要开启SQL解析缓存，只需要设置：
+'DB_SQL_BUILD_CACHE' => true,
+
+开启调试模式
+define('APP_DEBUG',TRUE);	在项目入口文件中
+SHOW_PAGE_TRACE =>TRUE;		在项目配置文件中
+注意关闭 define('RUNTIME_ALLINONE', true);  // 开启ALLINONE运行模式 
+不关闭的话没有sql语句的信息	
+入口文件都是define('','')
+配置中都是用返回数组的形式
+return array(
+	'SHOW_PAGE_TRACE'		=>true, 
+	'APP_DEBUG'				=> true,//开启调试模式
+	"DEFAULT_THEME"    		=> "default",	//默认模板主题名称
+	'URL_CASE_INSENSITIVE'  => true, 		//URL不区分大小写
+	//'URL_MODEL'            	 => 2,           //服务器开启Rewrite模块时，可去除URL中的index.php
+);
+
+)
+
+volist的使用<volist name="research_europe_info" id="vo">
+        <div class="jouranl_record">
+        	<div class="record_title"><a 		href="__APP__/Research/readPDF_europe/id/{$vo.id}">{$vo.file_name}		</a></div>
+		<div class="record_author">&nbsp;&nbsp;&nbsp;发布时间:	{$vo.publish_date}&nbsp;&nbsp;&nbsp;作者:{$vo.auther}</div>
+            <div class="record_summary">{$vo.original_url}</div>
+            <if condition="$vo.key_words neq ''"><div class="record_author">关键词	：&nbsp;{$vo.key_words}</div></if>
+        </div>
+        </volist>
+
+if的用法 <if condition="$cat eq 4">class="select"</if>
+
+assign('name',$name) 引号内是分配到模板的变量名自主命名 后面$name是此方法内的变量
+
+模块中sql的用法$research_europe_info = $world_europe_economy_and_trade->where("file_name like '%".$content."%' ")->select();
+	where('id=2 or id=12 or id=13')
+
+排错用var_dump 加 exit(); 可以知道执行到哪里
+扩展函数用load加载 位于框架extend目录
+	扩展函数库的函数作用概述:截取字符串 截取后可现实...
+	产生随机字符串 可用来生成密码
+	获取登录验证码
+	字节格式化kmg样式
+	随机生成一串字符串
+	对查询结果集进行排序list_sort_by(结果,字段,升降)
+
+表单的Form标签中一定要添加 enctype=”multipart/form-data”文件才能上传
+	
+	
+
+注意拼合路劲的文件后缀的 点 . 跟连接符. 不要忘了
+
+扩展配置可以绕过缓存 即时生效 'LOAD_EXT_CONFIG'=>'user,db'
+debug模式可以在入口文件中加入define('APP_DEBUG', true);
+
+开启allinone模式可进一步提高性能 开了之后debug模式失效
+编译缓存可用TMPL_CACHE_ON =>FALSE 关闭
+
+
+类库扩展 import('Com.Sina.Util.UnitText')即导入Extend/Library/Com/里面的sina目录下的Util/UnitTest.class.php
+
+
+
+eq或者 equal 等于 
+neq 或者notequal 不等于 
+gt 大于 
+egt 大于等于 
+lt 小于 
+elt 小于等于 
+heq 恒等于 
+nheq 不恒等于 
+<if condition="$col.cid eq $col_info[parent_id]"> 模板分配过来的$col_info 不是volist的id下的内容 用[]不用.
+
+
+<if><elseif /><else /></if>
+
+
+使用完整文件名包含
+格式：<include file="完整模板文件名" />
+<import type='js' file="Js.Util.Array" />用来导入css js type默认js 如导入css则要type='css' 默认是Public下如用别的路径需要basepath熟悉感指定
+
+
+可以使用present标签来判断模板变量是否已经赋值，<present name="name">name已经赋值<else /> name还没有赋值</present>
+
+
+<php></php>内不能再用标签 如<eq>{$name}
+
+volist里面if condition内的条件可用id.字段来写 用$name[]不可行因为$name是二维数组 
+由于if标签的condition属性里面基本上使用的是php语法，尽可能使用判断标签和Switch标签会更加简洁，原则上来说，能够用switch和比较标签解决的尽量不用if标签完成
+
+在condition属性中可以支持eq等判断表达式，同上面的比较标签，但是不支持带有”>”、”<”等符号的用法，因为会混淆模板解析condition属性可以支持点语法和对象语法
+
+{}是定界符 不用定界的地方不要用{} 比如condition里面的变量直接用$cid 这样 
+模板标签的{和$之间不能有任何的空格，否则标签无效
+
+{$Think.version}
+limit第二个参数是length
+
+ date('Y-m-d H:i:s');以此格式调用当前时间
+
+update即save时要指定更新id
+系统函数库文件在系统下的common文件夹内 可以自动加载
+扩展函数库放下项目下common内 要在配置内写入相应配置才能加载
+'LOAD_EXT_FILE'			=> "extend,tpcms_common_function",		// 预载入 Common 目录下的 extend.php 和 tpcms_common_function.php
+
+
+think2.0中查询where带变量为->where("id='$id'") where("id= '".$id."'")
+最好用这种方法查询以免发生语法的解析错误
+$User = M("User"); // 实例化User对象
+$condition['name'] = 'thinkphp';
+$condition['status'] = 1;
+// 把查询条件传入查询方法
+$User->where($condition)->select(); 
+**用volist显示数据一定要分析清楚到底是几层 超过4层的 要记得在后台处理下!!!
+
+__PUBLIC__等前后都是两个_!!
+
+使用水印类import('ORG.Util,Image');
+$Image=new Image();
+$Image->water(旧文件路径,新文件路径);
+
+分页类 import('ORG.Util.Page');
+文件上传类 import(ORG.Net.upload);
+ ORG第三方类库 路径在think的Extend/Libray/ORG  目前官方提供的类以及第三方扩展都在ORG中
+企业类库包可以在Library下面建立Com目录 如Extend/Library/Com下面创		建了Sina目录，并且放了Util\UnitTest.class.php类库文件，可以使用下面的方式导入 
+		import('Com.Sina.Util.UnitTest');
+如果你直接使用的是第三方的类库包，或者是类名和后缀和ThinkPHP的默认规则不符合的，我们建议你放到第三方类库扩展目录Extend/Vendor目录下面，并使用vendor方法来导入:Vendor('Zend.Filter.Dir')类库后缀是php的而不是class.php的，如果你的第三方类库的后缀是class.php，可以使用：
+Vendor('Zend.Filter.Dir','','.class.php');
+
+系统Action类提供了一个初始化方法_initialize接口，可以用于扩展需要，_initialize方法会在所有操作方法调用之前首先执行__hack_action函数定义后仅在访问一个不存在的操作方法，而且当前控制器没有定义空操作方法和对应的默认模板文件的时候才会被执行。__hack_module仅在访问一个不存在的模块的时候会被调用，优先级大于空模块。简单的说，如果定义了__hack_module 则当前模块不存在的情况下操作会被接管。
+
+
+
+thinkphp中连接数据库
+是在项目配置文件中添加
+<?php
+
+	return array(
+		//数据库配置信息
+		'DB_TYPE' => 'mysql', //数据库类型
+		'DB_HOST'   => 'localhost', // 服务器地址
+       	 	'DB_NAME'   => 'thinkphp', // 数据库名
+       		'DB_USER'   => 'root', // 用户名
+       		'DB_PWD'    => '', // 密码
+        	'DB_PORT'   => 3306, // 端口
+        	'DB_PREFIX' => 'think_', // 数据库表前缀 
+        //其他项目配置参数
+        // ...
+
+)
+
+?>
+或者'DB_DSN' => 'mysql://username:password@localhost:3306/DbName'
+
+
+如果你仅仅是使用原生SQL查询的话，不需要使用额外的模型类，实例化一个空模型类即可进行操作了，例如：
+//实例化空模型
+$Model = new Model();
+//或者使用M快捷方法是等效的
+$Model = M();
+//进行原生的SQL查询
+$Model->query('SELECT * FROM think_user WHERE status = 1');
+获取变量 $this->方法名("变量名","过滤方法","默认值")
+	_get 获取get _post获取post  _param 自动判断get post put参数
+	_put 获取put参数 _session 获取$_SESSION _cookie 获取$_COOKIE参数
+	    $this->_get("id","strip_tags",0);
+
+
+halt($msg);输出错误信息并终止执行
+
+为了更好的查明错误，经常需要查看下最近使用的SQL语句，我们可以用getLastsql方法来输出上次执行的sql语句
+配置模板文件后缀     'TMPL_TEMPLATE_SUFFIX'=>'.tpl'
+
+
+
+
+
+
+普通的模板变量需要首先赋值后才能在模板中输出，但是系统变量则不需要，可以直接在模板中输出，系统变量的输出通常以{$Think 打头
+{$Think.server.script_name} // 输出$_SERVER['SCRIPT_NAME']变量
+{$Think.session.user_id} // 输出$_SESSION['user_id']变量
+{$Think.get.pageNumber} // 输出$_GET['pageNumber']变
+如果前面输出的变量在后面定义的函数的第一个参数，则可以直接使用：
+
+    {$data.name|substr=0,3}
+
+复制代码
+表示输出
+
+    <?php echo (substr($data['name'],0,3)); ?>
+    {$create_time|date="y-m-d",###}
+
+复制代码
+表示date函数传入两个参数，每个参数用逗号分割，这里第一个参数是y-m-d，第二个参数是前面要输出的create_time变量，因为该变量是第二个参数，因此需要用###标识变量位置，
+使用运算符的时候，不再支持点语法和常规的函数用法
+
+
+单必须添加enctype="multipart/form-data"属性才能支持文件上传功能
+ tag('action_init'); // 添加action_init 标签
+行为定义完成后，就需要绑定到某个标签位置才能生效，否则是不会执行的
+在tags.php中
+    return array(
+         'app_init'=>array('CheckLang'),
+    );
+
+页面中成功与失败的页面跳转
+		  if($result){
+		    //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+		    $this->success('新增成功', 'User/list');
+		} else {
+		    //错误页面的默认跳转页面是返回前一页，通常不需要设置
+		    $this->error('新增失败');
+		}
+
+Success和error方法都有对应的模板，并且是可以设置的，默认的设置是两个方法对应的模板都是：
+//默认错误跳转对应的模板文件
+		自带模板 其实是一个	'TMPL_ACTION_ERROR' => THINK_PATH . 'Tpl/dispatch_jump.tpl';
+					//默认成功跳转对应的模板文件
+					'TMPL_ACTION_SUCCESS' => THINK_PATH . 'Tpl/dispatch_jump.tpl';
+
+
+项目内部的模板文件
+//默认错误跳转对应的模板文件
+'TMPL_ACTION_ERROR' => 'Public:error';
+//默认成功跳转对应的模板文件
+'TMPL_ACTION_SUCCESS' => 'Public:success';
+
+无论是什么方式，验证规则的定义是统一的规则，定义格式为：
+
+    array(
+        array(验证字段1,验证规则,错误提示,[验证条件,附加规则,验证时间]),
+        array(验证字段2,验证规则,错误提示,[验证条件,附加规则,验证时间]),
+        ......
+    );
+
+对数租的组合添加必须用$arr['key']['字段']  添加value没意义!!!!

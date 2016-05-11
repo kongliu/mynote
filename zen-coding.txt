@@ -1,0 +1,386 @@
+html:xt  声明
+引入js文件 script:src
+键盘上的end键 即能移动到行尾
+.xx指class的值为xx []指其属性 #指id $为自动数字 [value=$]
+meta:utf, meta:compat
+style, link:css, link:print, link:favicon, link:rss,
+script, script:src
+
+body 中会常用到的缩写
+
+诸如 div, p, a, ul, ol, input:t, input:r 等等
+
+其中，类似 ul+ 的形式可展开为（+号可自动生产默认的子元素）
+
+<ul>
+    <li></li>
+</ul>
+
+notepad++自动下载的zencoding版本不能用 手动下载
+
+
+Zend Coding语法
+
+1.E | E#name | E.name
+
+这里E表示元素，如p,div等。#name和.name分别表示ID和class属性。例：
+
+div
+1
+	
+<div></div>
+
+div#main
+1
+	
+<div id="main"></div>
+
+ul.item
+1
+	
+<li class="item"></li>
+
+如要显示一个id和多个class属性时，可以这样写
+
+ul#nav.one.two
+1
+	
+<ul id="nav" class="one two"></ul>
+
+2.E>E | E#name>E#name | E.#name>E.name | E.name>E.name
+
+>表示父级嵌套子级。例：
+
+div>span
+1
+	
+<div><span></span></div>
+
+div#nav>ul.main
+1
+2
+3
+	
+<div id="nav">
+<ul class="main"></ul>
+</div>
+
+3.E+E | E#name+E#name | E.#name+E.name | E.name+E.name
+
++号表示兄弟关系。例：
+
+p+p
+1
+2
+	
+<p></p>
+<p></p>
+
+div#header+div#content+div#footer
+1
+2
+3
+	
+<div id="header"></div>
+<div id="content"></div>
+<div id="footer"></div>
+
+E+ (+号表示会生成默认的子元素)
+
+table+
+1
+2
+3
+4
+5
+	
+<table>
+<tr>
+<td></td>
+</tr>
+</table>
+
+ul+
+1
+2
+3
+	
+<ul>
+<li></li>
+</ul>
+
+dl+
+1
+2
+3
+4
+	
+<dl>
+<dt></dt>
+<dd></dd>
+</dl>
+
+4.E*N
+
+N:表示某个元素需要重复的次数。例：
+
+p*3
+1
+2
+3
+	
+<p></p>
+<p></p>
+<p></p>
+
+ul#nav>li.item*4
+1
+2
+3
+4
+5
+6
+	
+<ul id="nav">
+<li class="item"></li>
+<li class="item"></li>
+<li class="item"></li>
+<li class="item"></li>
+</ul>
+
+5.E*N$
+
+$:表示序号。例：
+
+ul#nav>li.item-$*4
+1
+2
+3
+4
+5
+6
+	
+<ul id="nav">
+<li class="item-1"></li>
+<li class="item-2"></li>
+<li class="item-3"></li>
+<li class="item-4"></li>
+</ul>
+
+6.E[attr]
+
+attr:表示元素属性。例:
+
+a[title]
+1
+	
+<a href="" title=""></a>
+
+td[colspan=2]
+1
+	
+<td colspan="2"></td>
+
+7.E|filter
+
+E|e
+
+|e输出转义字符
+
+div#wrap>div.content>p|e
+1
+2
+3
+4
+5
+	
+&lt;div id="wrap"&gt;
+&lt;div class="content"&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+8.( )控制嵌套分组关系
+
+div#header>(h1.logo>a)+ul.nav>li.item*5>a
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+	
+<div id="header">
+<h1 class="logo"><a href=""></a></h1> /*h1和ul是兄弟关系*/
+<ul class="nav">
+<li class="item"><a href=""></a></li>
+<li class="item"><a href=""></a></li>
+<li class="item"><a href=""></a></li>
+<li class="item"><a href=""></a></li>
+<li class="item"><a href=""></a></li>
+</ul>
+</div>
+
+div#header>h1.logo>a+ul.nav>li.item*5>a
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+	
+<div id="header">
+<h1 class="logo"> /*h1和ul是父子关系*/
+<a href=""></a>
+<ul class="nav">
+<li class="item"><a href=""></a></li>
+<li class="item"><a href=""></a></li>
+<li class="item"><a href=""></a></li>
+<li class="item"><a href=""></a></li>
+<li class="item"><a href=""></a></li>
+</ul>
+</h1>
+</div>
+
+以上两种写法得到的结构是不一样的。 请大家注意观察。
+
+练习：将以下代码用zen-coding写出来。
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+	
+<div id="page">
+<div id="header">
+<ul id="nav">
+<li><a href=""></a></li>
+<li><a href=""></a></li>
+<li><a href=""></a></li>
+<li><a href=""></a></li>
+</ul>
+</div>
+<div id="page">
+<h1><span></span></h1>
+<p></p>
+<p></p>
+</div>
+<div id="footer"></div>
+</div>
+
+答案：(选中下一空行试试)
+div#page>(div#header>ul#nav>li*4>a)+(div#page>(h1>span)+p*2)+div#footer
+三、Notepad++中zen-coding的使用
+
+Expand Abbreviation(Ctrl+E):展开缩写
+
+用法：输入缩写代码后，在代码末尾直接按快捷键得到完整代码。
+
+Wrap with Abbreviation(Ctrl+Shift+A):嵌套父级元素
+
+用法：选中需要嵌套父级元素的标签，按快捷键，在弹出的对话框中输入父级标签回车即可。例：
+1
+2
+3
+4
+5
+	
+list1
+list2
+list3
+list4
+list5
+
+选中以上内容，然后按【Ctrl+Shift+A】在弹出的对话框中输入ul.nav>li.item-$*>a[title]后按【Enter】键，就会生成如下代码
+1
+2
+3
+4
+5
+6
+7
+	
+<ul class="nav">
+<li class="item-1"><a href="" title="">list1</a></li>
+<li class="item-2"><a href="" title="">list2</a></li>
+<li class="item-3"><a href="" title="">list3</a></li>
+<li class="item-4"><a href="" title="">list4</a></li>
+<li class="item-5"><a href="" title="">list5</a></li>
+</ul>
+
+Balance TagInward/Outward(Ctrl+Shift+D):选中代码块
+
+选中当前光标所在的标记，再次按下可以依次选中其父标签。
+
+Go to Next/Previous Edit Point( Ctrl+Alt+] / Ctrl+Alt+[ ):转到下一个/上一个编辑点
+
+Merge Lines(Ctrl+Alt+M):合并行
+
+将选中的多行代码合并为一行。压缩css、js代码为一行时，这个很方便。Ctrl+A，然后Ctrl+Alt+M，两下即可搞定，免去了动用压缩工具的麻烦。（当然这个只是简单地将代码合并为一行，并不能做更深入的代码压缩）
+
+Toggle Comment(Alt+/):添加、移除注释
+
+注释掉光标所在的代码块 （Notepad++ 自带的Ctrl+Shift+Q也可以用来注释代码）
+
+Split/Join Tag(Ctrl+’ ):空标签转化
+
+比如将 <div></div> 转化为 <div/>， 反向亦可。
+
+Remove Tag(Ctrl+Shift+’ ):移除标签
+
+比如将 <div>hello world</div> 移除div标签，留下hello world。
+zen-coding常用缩写
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+	
+html:4t (HTML 4.01 Transitional)
+html:4s (HTML 4.01)
+html:xt (XHTML 1.0)
+html:xs (XHTML 1.0 Strict)
+html:xxs (XHTML 1.1)
+html:5 (HTML5)
+ 
+meta:utf, meta:compat
+style, link:css, link:print, link:favicon, link:rss,
+script, script:src
+ 
+div, p, a, ul, ol, input:t, input:r
+ 
+ol+, dl+, table+, tr+, select+, map+, optg+
+ 
+cc:ie6, cc:ie, cc:noie

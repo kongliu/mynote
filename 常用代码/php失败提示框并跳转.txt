@@ -1,0 +1,7 @@
+$url="./indentity.html" ;    
+	  
+		echo " <script   language = 'javascript'   type = 'text/javascript'> ";    
+		echo "alert('对不起,身份验证失败,您没有访问权限!');";
+		echo " window.location.href = '$url' ";    
+	  
+		echo " </script> ";    

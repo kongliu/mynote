@@ -1,0 +1,332 @@
+﻿ ​<?php
+/**
+ * 获取用户真实 IP
+ */
+function getIP()
+{
+    static $realip;
+    if (isset($_SERVER)){
+        if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])){
+            $realip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        } else if (isset($_SERVER["HTTP_CLIENT_IP"])) {
+            $realip = $_SERVER["HTTP_CLIENT_IP"];
+        } else {
+            $realip = $_SERVER["REMOTE_ADDR"];
+        }
+    } else {
+        if (getenv("HTTP_X_FORWARDED_FOR")){
+            $realip = getenv("HTTP_X_FORWARDED_FOR");
+        } else if (getenv("HTTP_CLIENT_IP")) {
+            $realip = getenv("HTTP_CLIENT_IP");
+        } else {
+            $realip = getenv("REMOTE_ADDR");
+        }
+    }
+ 
+ 
+    return $realip;
+}
+ file_get_contents("php://input");接收json数据
+gmstrftime('%X',time());
+
+一定要注意字符串的时候 标志是否跟切割时冲突
+
+str_pos要配合is_numberic
+array_diff()不能用于二维数组
+
+/**
+*  @desc 根据两点间的经纬度计算距离
+*  @param float $lat 纬度值
+*  @param float $lng 经度值
+*/
+ function getDistance($lat1, $lng1, $lat2, $lng2)
+ {
+     $earthRadius = 6367000; //approximate radius of earth in meters
+ 
+     /*
+       Convert these degrees to radians
+       to work with the formula
+     */
+ 
+     $lat1 = ($lat1 * pi() ) / 180;
+     $lng1 = ($lng1 * pi() ) / 180;
+ 
+     $lat2 = ($lat2 * pi() ) / 180;
+     $lng2 = ($lng2 * pi() ) / 180;
+ 
+     /*
+       Using the
+       Haversine formula
+ 
+       http://en.wikipedia.org/wiki/Haversine_formula
+ 
+       calculate the distance
+     */
+ 
+     $calcLongitude = $lng2 - $lng1;
+     $calcLatitude = $lat2 - $lat1;
+     $stepOne = pow(sin($calcLatitude / 2), 2) + cos($lat1) * cos($lat2) * pow(sin($calcLongitude / 2), 2);  $stepTwo = 2 * asin(min(1, sqrt($stepOne)));
+     $calculatedDistance = $earthRadius * $stepTwo;
+ 
+     return round($calculatedDistance);
+ }
+使用抽象类的注意事项:
+1.	基本用法
+
+abstract class 类名{
+	//方法 []
+	//属性 []
+}
+
+2.	如果一个类使用abstract 来修饰，则该类就是抽象类, 如果一个方法被abstract修饰，则该方法就是抽象方法【抽象方法就不能有方法体.】
+3.	抽象类可以没有抽象方法.同时还可以有实现了的方法.
+
+4.如果一个类中，只要有抽象方法，则该类必须声明为abstract
+	如果给一个函数传递一个对象，实际上是传递的一个地址.
+	如果给函数传递的是基本数据类型( 整数、小数、布尔、字符) ,究竟传递的是什	么?
+结论   : 在默认的情况下是传递的值， 如果你希望传入地址
+function test(&$变量....){
+
+}
+
+在php中如果，给一个函数传递的是数组，则默认情况下是传值(拷贝了新的数组),如果希望传入地址，则应当，&$数组名
+
+
+1. basename("/mnt/img/image01.jpg")函数:得到文件名;输出结果为:image01.jpg.
+
+   使用 basename($uriString) 我们可以得到一个包含扩展名的文件名；
+
+　 如果不需要扩展名，也可以使用 basename($uriString, $extString) 过滤扩展名，仅仅返回文件名。
+
+2. echo __FILE__;得到当前请求文件的完整路径,输出格式如:/mnt/hgfs/ictsapce/test/index.php
+
+3.dirname() 函数返回路径中的目录部分。如:
+
+  echo dirname("/testweb/home.php");
+
+  输出:/testweb 
+
+
+
+后台操作弹出js	echo '
+			<script type="text/javascript" language="javascript">alert(decodeURI("%E5%AF%B9%E4%B8%8D%E8%B5%B7%EF%BC%8C%E6%AF%8F%E5%A4%A9%E5%8F%AA%E8%83%BD%E4%B8%8B%E8%BD%BD15%E7%AF%87%E8%AE%BA%E6%96%87"));window.location.href = "'.$url.'";</script>'; 其中的decodeURI是js函数
+
+mysql_real_escape_string() 函数转义 SQL 语句中使用的字符串中的特殊字符。
+
+下列字符受影响：
+
+    \x00
+    \n
+    \r
+    \
+    '
+    "
+    \x1a
+
+如果成功，则该函数返回被转义的字符串。如果失败，则返回 false。
+
+为false的情况
+布尔值 FALSE 自身 
+整型值 0 (零) 
+浮点型值 0.0 (零) 
+空 字符串, 以及 字符串 "0" 
+不包括任何元素的数组 
+不包括任何成员变量的对象（仅PHP 4.0 适用） 
+特殊类型 NULL (包括尚未设定的变量) 
+
+
+condition 后不要忘了$
+date.timezone = Asia/Shanghai 不加引号!!!!!!!!!!
+$_SERVER['HTTP_USER_AGENT']。
+表单的Form标签中一定要添加 enctype=”multipart/form-data”文件才能上传
+这是用来检查浏览页面的访问者在用什么操作系统（包括版本号）浏览器（包括版本号）和用户个人偏好.
+其中需要检查用户的 agent 字符串，它是浏览器发送的 HTTP 请求的一部分
+if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE")) 监测是头是ie
+set_time_limit(0);设置超过相应最大时间也不中断
+
+static变量
+1.只能被初始化一次 再次赋值不影响原有值
+2.函数运行结束后,静态变量的值不会清除(可用于统计函数执行了多少次)
+
+strpos($mystring, $findme);find在my中首次出现的位置
+用来判断是否存在
+如果想把0也作为真来判断用!== 不全等于
+<?php
+$mystring = 'abc';
+$findme   = 'a';
+$pos = strpos($mystring, $findme);
+
+// 使用 !== 操作符。使用 != 不能像我们期待的那样工作，
+// 因为 'a' 的位置是 0。语句 (0 != false) 的结果是 false。
+if ($pos !== false) {
+     echo "The string '$findme' was found in the string '$mystring'";
+         echo " and exists at position $pos";
+} else {
+     echo "The string '$findme' was not found in the string '$mystring'";
+}
+?> 
+
+
+php中的循环用elseif javascript中用else if 
+
+
+说明
+
+string urlencode ( string $str )
+
+此函数便于将字符串编码并将其用于 URL 的请求部分，同时它还便于将变量传递给下一页。
+
+
+提示用户保存一个生成的 PDF 文件（Content-Disposition 报头用于提供一个推荐的文件名，并强制浏览器显示保存对话框）：
+
+<?php
+header("Content-type:application/pdf");
+
+// 文件将被称为 downloaded.pdf
+header("Content-Disposition:attachment;filename='downloaded.pdf'");
+
+// PDF 源在 original.pdf 中
+readfile("original.pdf");
+?>
+
+<html>
+<body>
+
+
+//格式化时间
+		foreach($news_list  as $key=> $value){
+			$news_list[$key]['atime']=date('Y-m-d',strtotime($value['atime']));
+		}
+
+$_SERVER () 'REMOTE_ADDR' 获取用户ip
+
+接口中的方法中所有的方法必须为public 实现接口用implements 接口中所有方法必须实现
+实现多个接口是其中方法不能有重名
+接口也可以继承用extends
+
+继承几个抽象类的时候子类必须继承抽象类中的所有抽象方法,而且方法的可见性必须必父类中的更加宽松
+类中至少有一个方法是抽象方法的 那么这个类就是抽象类 抽象类不能被直接实例化 要先被继承 抽象方法不能包含具体的功能实现
+声明类成员活方法为static 可以不实例化而直接访问 他属于类不属于对象 所以不能通过一个对象来访问其中的静态成员 (静态方法除外)静态属性只能被初始化一个字符值或者一个常量,不能使用表达式.所以可以吧静态属性初始化成一个整形或者数组,但是不能指向一个变量或者函数返回值,也不能指向一个对象
+
+
+
+implode('-',数组片) 拼合数组成字符串
+
+explode('-',目标字符串) 将目标字符串用另一个字符串为标志切割到数组中
+
+substr($start,$length)切割字符串
+如果 start 是非负数，返回的字符串将从 string 的 start 位置开始，从 0 开始计算如果 start 是负数，返回的字符串将从 string 结尾处向前数第 start 个字符开始
+如果提供了正数的 length，返回的字符串将从 start 处开始最多包括 length 个字符（取决于 string 的长度）。 如果提供了负数的 length，那么 string 末尾处的许多字符将会被漏掉
+
+reset()将数组的指针返回第一个元素 并返回其值重启路由器的键
+
+urlencode — 编码 URL 字符串
+
+str_replace ( $search ,  $replace ,  $subject [ int &$count ] )注意$count前面的&这表示不是用来设置而是用来记录替换发生的次数
+可以echo出$count
+该函数返回一个字符串或者数组。该字符串或数组是将 subject 中全部的 search 都被 replace 替换之后的结果。
+
+substr_replace ( $string ,$replacement , $start [, $length ] )
+substr_replace() 在字符串 string 的副本中将由 start 和可选的 length 参数限定的子字符串使用 replacement 进行替换。 
+
+
+
+
+
+foreach等循环里面用到的中间用来处理的变量要每次都要初始化
+
+
+当转换为 boolean 时，以下值被认为是 FALSE： 
+?the 布尔值 FALSE 自身  
+?the 整型值 0 (零)  
+?the 浮点型值 0.0 (零)  
+?空 字符串, 以及 字符串 "0"  
+?不包括任何元素的数组  
+? 不包括任何成员变量的对象（仅PHP 4.0 适用）  
+? 特殊类型 NULL (包括尚未设定的变量) 
+
+
+file_put_contents (  $filename ,  $data [,  $flags = 0 [, resource $context ]] )
+
+和依次调用 fopen()， fwrite() 以及 fclose() 功能一样。 
+		flags 的值可以是 以下 flag 使用 OR (|) 运算符进行的组合。 
+			FILE_USE_INCLUDE_PATH  在 include 目录里搜索 filename。 
+			FILE_APPEND  如果文件 filename 已经存在，追加数据而不是覆盖。 
+
+
+file_get_contents() — 将整个文件读入一个字符串
+file_get_contents (  $filename [, bool $use_include_path = false [, resource $context [, int $offset = -1 [, int $maxlen ]]]] )
+如果要打开有特殊字符的 URL （比如说有空格），就需要使用 urlencode() 进行 URL 编码。 
+读取失败返回false
+file() — 把整个文件读入一个数组中
+
+file_exists() — 检查文件或目录是否存在
+
+filesize — 取得文件大小
+feof — 测试文件指针是否到了文件结束的位置必须指向由 fopen() 或 fsockopen() 成功打开的文件
+fclose — 关闭一个已打开的文件指针
+unset()  — 释放给定的变量 无返回值
+copy ( string $source , string $dest [, resource $context ] )将文件从 source 拷贝到 		dest如果目标文件已存在，将会被覆盖
+fileatime — 取得文件的上次访问时间
+filectime — 取得文件的 inode 修改时间
+filemtime (  $filename )本函数返回文件中的数据块上次被写入的时间，也就是说，文	件的内容上次被修改的时间。 
+bool is_readable ( string $filename )判断给定文件名是否存在并且可读
+mkdir() — 新建目录
+rmdir — 删除目录 成功返回ture
+is_uploaded_file — 判断文件是否是通过 HTTP POST 上传的给出的文件是通过 HTTP POST 上	传的则返回 TRUE。这可以用来确保恶意的用户无法欺骗脚本去访问本不能访问的文件
+move_uploaded_file ($filename , $destination )本函数检查并确保由 filename 指定的文	件是合法的上传文件（即通过 PHP 的 HTTP POST 上传机制所上传的）。如果文件合法	，则将其移动为由 destination 指定的文件。
+
+
+让数组按格式输出 前面加echo '<pre>'; 不要忘记引号
+
+file_exists ( $filename )检查文件或目录是否存在。如果由 filename 指定的	文件或目录存在则返回 TRUE，否则返回 FALSE。 
+is_writable — 判断给定的文件名是否可写如果文件 filename 存在并且可写则返回 TRUE
+
+
+pathinfo — 返回文件路径的信息
+basename — 返回路径中的文件名部分
+
+
+is_file() — 判断给定文件名是否为一个正常的文件如果文件存在且为正常的文件则返回 TRUE，否则返回 FALSE。 
+is_dir()判断是否是文件夹
+unlink()删除文件 成功时返回 TRUE， 或者在失败时返回 FALSE. 
+opendir()打开目录句柄
+readdir()从目录句柄中读取条目 return下一个文件的文件名
+
+		列出当前目录的所有文件并去掉 . 和 ..
+		<?php
+		if ($handle = opendir('.')) {
+   		 while (false !== ($file = readdir($handle))) {
+       		 if ($file != "." && $file != "..") {
+           		 echo "$file\n";
+        		}
+   		 }
+   		 closedir($handle);
+		}
+		?> 
+
+
+strtotime() date->time;
+
+
+
+php连接mysql
+
+$con = mysql_connect("localhost","peter","abc123");
+if (!$con)
+  {
+  die('Could not connect: ' . mysql_error());
+  }
+
+// some code
+
+mysql_close($con);
+
+
+一、$myarray['key'] 与 $myarray["key"] 与 $myarray[key]的差别：
+以上三种方式主要是通过字符串类型数组下标即数组键访问数组的值，如果数组下标为索引类型即键值为数字则无需注意。
+1，$myarray['key'] 单引号模式被直接解析为$myarray的值;
+2，$myarray["key"]双引号模式会首先分析"key"字符串内部是否包含 PHP变量，然后再解析为$myarray的值;
+3，$myarray[key]没有任何引号会先分析局部作用域内有没有key常量定义(即有无define('key','val'))，
+
+

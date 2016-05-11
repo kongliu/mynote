@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<link rel="stylesheet" href="./inc/screen.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="./inc/colorbox.css" type="text/css" media="screen">
+	<script src="./js/timeliner/jquery.min.js"></script>
+	<script type="text/javascript" src="./inc/colorbox.js"></script>
+	<script type="text/javascript" src="./js/timeliner/timeliner.js"></script>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title></title>
+</head>
+<body>
+<div class="memora_time" id="memora_time">
+	<div id="timelineContainer">
+			<div class="timelineToggle"><p><a class="expandAll">+ 展开全部</a></p></div>
+			<br class="clear">
+			<if condition="$event_europe_list eq ''">
+				<volist name="event_europe_old_list" id="vo" key="n">
+				<div class="timelineMajor">
+					<h2 class="timelineMajorMarker"><span>{$vo.year}</span></h2>
+					<dl class="timelineMinor">
+						<dt id="{$n}" style="display:none;"><a></a></dt>
+						<dd class="timelineEvent" id="{$n}1001EX" style="display:none;">
+							<volist name="vo.month" id="zo" key="y">
+								<volist name="zo.day" id="co">
+									<em>{$key}</em>
+									<p>●&nbsp;{$co}</p>
+								</volist>
+							</volist>
+								<br class="clear">
+						</dd><!-- /.timelineEvent -->
+					</dl><!-- /.timelineMinor -->
+				</div><!-- /.timelineMajor -->
+				</volist>
+			<else />
+				<volist name="event_europe_list" id="vo" key="n">
+				<div class="timelineMajor">
+					<h2 class="timelineMajorMarker"><span>{$vo.month}</span></h2>
+					<dl class="timelineMinor">
+						<dt id="{$n}" style="display:none;"><a></a></dt>
+						<dd class="timelineEvent" id="{$n}1001EX" style="display:none;">
+							<volist name="vo.content" id="zo" key="y">
+							<em>{$zo.day}</em>
+							<p>●&nbsp;{$zo.summary}</p>
+							</volist>
+								<br class="clear">
+						</dd><!-- /.timelineEvent -->
+					</dl><!-- /.timelineMinor -->
+				</div><!-- /.timelineMajor -->
+				</volist>
+			</if>
+			
+			<br class="clear">
+	</div>
+</div>
+	<script>
+		$(document).ready(function() {
+			$.timeliner({
+				startOpen:'#11001EX'
+			});
+			// Colorbox Modal
+			$(".CBmodal").colorbox({inline:true, initialWidth:100, maxWidth:682, initialHeight:100, transition:"elastic",speed:750});
+		});
+	</script>
+	
+
+	
+</body>
+</html>

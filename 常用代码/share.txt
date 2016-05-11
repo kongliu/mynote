@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title></title>
+</head>
+<body>
+<div class="caozuo">
+	  		<div style="float:left;height:20px;line-height:20px;margin-left:25px;display:inline;">分享到</div><div class="bshare-custom" style="line-height:3px;">&nbsp;<a title="分享到QQ空间" class="bshare-qzone"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到人人网" class="bshare-renren"></a><a title="分享到腾讯微博" class="bshare-qqmb"></a><a title="分享到豆瓣" class="bshare-douban"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+		 		<span class="BSHARE_COUNT bshare-share-count">0</span>
+	 		</div>
+	 <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=1&amp;lang=zh"></script>
+	 <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	
+	<A href="javascript:window.external.addFavorite(window.location.href,'xxx')">收藏</A>
+	
+	<script>
+function addfavorite()
+{
+   
+      window.external.addFavorite('http://www.phpddt.com','php点点通');
+   
+   
+}
+</script>
+<body>
+<a href="#" onclick="addfavorite()">加入收藏！</a>
+
+<script type="text/javascript"> 
+function addBookmark(title,url) { 
+if (window.sidebar) { 
+window.sidebar.addPanel(title,url,""); 
+} else if( document.all ) { 
+window.external.AddFavorite(url,title); 
+} else if( window.opera && window.print ) { 
+return true; 
+} 
+} 
+
+function setHome(url) 
+{ 
+if (document.all){ 
+document.body.style.behavior='url(#default#homepage)'; 
+document.body.setHomePage(url); 
+}else if (window.sidebar){ 
+if(window.netscape){ 
+try{ 
+netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+}catch (e){ 
+alert( "该操作被浏览器拒绝，如果想启用该功能，请在地址栏内输入 about:config,然后将项 signed.applets.codebase_principal_support 值该为true" ); 
+} 
+} 
+if(window.confirm("你确定要设置"+url+"为首页吗？")==1){ 
+var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch); 
+prefs.setCharPref('browser.startup.homepage',url); 
+} 
+} 
+} 
+</script> 
+<a href="javascript:void(null)" onClick="setHome('http://www.jb51.net');">设为首页</a> - <a href="javascript:addBookmark('脚本之家','http://www.jb51.net')">加入收藏</a> 
+ </div>
+</body>
+</html>

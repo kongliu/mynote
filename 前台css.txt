@@ -1,0 +1,129 @@
+html元素本身没有的属性要用style="" eg display:none    input 的width:30px
+
+li与div本身是块状 不在同一行 float让他们在同一行!!!!
+background-position:0 -105  图片左上角的位置在坐标点处 属性为no-repeat
+background-attachment : scroll | fixed 
+取值：
+scroll  :　 默认值。背景图像是随对象内容滚动 
+fixed  :　 背景图像固定 
+
+去掉链接的下划线a{text-decoration:none;}
+display:none 不为隐藏的对象保留物理空间 visibility:hidden;属性为隐藏的对象保留其占据的物理空间
+opacity透明度
+table:after { content: END OF TABLE } afer与before与content连用
+区分清楚ID 与class 还有name!!!!!!!!!
+。如果父元素只包含浮动元素，那么它的高度就会塌缩为零
+不想然ul中li在窗口模式中下飘 可以设置ul宽度 overflow:hidden;
+* { margin: 0; padding: 0; }
+body { font: 12px/1.5 Tahoma, Verdana, "宋体", sans-serif; padding: 50px; }
+.father { background-color: #EEE; width: 900px; margin: 100px auto; }
+.child1, .child2 { border: 1px dashed #555;  float: left; width: 400px; margin: 30px 10px; }
+/* 清除浮动的四种方法 */
+/* 方法一 */.father { float: left; }/* 此时父元素高度自适应，但是左右外边距auto失效，父元素靠左对齐 */
+/* 方法二 */.father { float: none; overflow: hidden;/* 高度自适应的关键。auto的话ie6会产生滚动条 */ _zoom: 1;/* 兼容IE6 */ }/* 此时父元素高度自适应，且居中对齐不变 */
+/* 方法三 */.father:after { content: "."; clear: both; display: block; height: 0; visibility: hidden; }/* 清除浮动的一种方法，但ie6不兼容 */
+<!--[if IE 6]>
+<style type="text/css">
+ /* 方法四 */.clear { clear: both; }/* 所有浏览器都适用，为了不增加嵌套才用条件注释兼容ie6 */
+</style>
+<![endif]-->
+由此总结出清除浮动的办法：
+
+    给父元素设置浮动；
+    对父元素使用溢出隐藏的办法；
+    对父元素使用:after伪对象实现；
+    空标签法。
+
+CSS引入有三种方式：
+
+    外部引入：常用于访问量巨大的网页。
+
+  <title>...</title>
+   <link rel="stylesheet" type="text/css" href="my.css"/>
+
+优势：1.一个CSS文件可以控制多个页面，减少了代码量。
+
+     2.可以把结构和样式分开，易改版易于维护，易于分工协作。
+
+     3.可以有效利用缓存机制。  
+
+缺点：1,相对于单页引入有垃圾代码。2，外部引入的herf属性会给服务器造成请求压力。
+
+   头部书写：常用于大型互联网首页，如新浪 网易。
+
+  <head>
+
+<title>...</title>  
+            <style>
+               p{
+                  font-size:14px;
+                  color：red;
+                 }
+             </style>
+  </head>
+
+优势：在加载首页的时候可以选择这种办法，不会有冗余，速度快没有请求压力。
+
+缺点：不易改版和维护，代码比较乱不易前后台沟通。
+
+   标签内写入：只限于个别效果的使用
+
+  <body>  
+      <p style='border:1px solid red'>wwww </p>
+   </body>
+
+优势：先级最高。
+
+缺点：冗余代码多，代码量大，不易维护。
+
+1.如果下面显示的内容顶到上面重叠可能是inline-block等问题还可能是挣个外面的div的height设置问题 推测 auto的话必须里面的每个元素都要设置具体height 不然要写具体大div的height
+
+2.div块状 span行内
+	div+inline=span
+	span+block=div
+	inline-block即是不用漂浮实现块在一行之内
+
+3.盒子模型的height包括padding border的宽度 先设置好高度再设置padding height会增加
+
+div加上padding等的大小跟图片背景加载多大区域有关系 文字是在整个div设定宽高内
+因此用缩小div 来确定文字右边范围 用增加leftpadding toppadding 来确定文字起始区域  用增加右下padding来加载完整图片
+
+实现文章等格式 可用float:right 然后设定不同的宽度来显示层次感
+ div的height auto 不是根据上下的东西 来算 而是根据里面的内容
+
+text-decoration:underline;cursor:pointer;
+文字下划线 变色 用:hover最简单
+.main_content .main_right  .books_directory a:hover{color:#004394;text-decoration:underline;cursor:pointer;}
+.main_content .main_right  .books_directory a{color:#444444;text-decoration:none;cursor:auto;}
+变色一定要写一行没触发伪类的本身css
+
+内容要auto都auto  有固定有auto有可能出错
+
+用<a href="#name值">
+配合<a name="name值">来实现跳转
+：<a href="#top">点击我连接到TOP</a>
+，<a name="A0" id="A0"></a>中的name与id，可以只使用一个，但某些情况下，只是用name会造成锚点无效的错误。建议还是name与id同时使用。
+
+实现文字在左图片在右可以让图片全部在一个div里面循环 然后divfloat:right 每张图片也float :right 为了防止同行设定div宽度
+
+网页自动跳转<meta http-equiv="refresh" content="3;url=http://www.....">
+
+表格页面居中 margin: 0 auto;
+
+overflow:scroll 总是显示滚动条 overflow-y 
+文字在图片上面 可以将图片的属性设置position:absolute;
+left:0px;
+top:0px;
+z-index:-1
+
+因为默认是z-index:0
+在使用相对定位时，无论是否进行移动，元素仍然占据原来的空间。因此，移动元素会导致它覆盖其它框
+
+，可以为所有块级元素应用 text-indent，但无法将该属性应用于行内元素，图像之类的替换元素上也无法应用 text-indent 属性。不过，如果一个块级元素（比如段落）的首行中有一个图像，它会随该行的其余文本移动
+如果想把一个行内元素的第一行“缩进”，可以用左内边距或外边距创造这种效果。
+
+当您希望使用框架时，请使用此 DTD！
+
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">

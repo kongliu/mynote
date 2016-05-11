@@ -1,0 +1,7 @@
+管理员身份运行
+netsh wlan set hostednetwork mode=allow ssid=zhuoyalei key=zhuoyalei
+右键共享到 两个打钩
+netsh wlan start hostednetwork
+
+
+netsh winsock reset - 这个命令可以重新初始化网络环境,解决由于软件冲突、病毒原因造成的参数错误。

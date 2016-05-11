@@ -1,0 +1,34 @@
+sublime汉化汉字显示方框
+在user 中加"dpi_scale": 1.0 
+在新窗体中打开文件在user中加"preview_on_click": false,
+sublime的emmet的快捷键是tab展开  html:xs
+codeintel代码补全
+ctags 跳转
+shift+右键 列选择
+函数后面有缩进用的三角箭头
+ctrl+shift+d 复制上一行
+ctrl+shift +/ 注释
+ctrl+/行注释
+
+ctrl+r 当前文件函数列表
+
+Ctrl+D?选中光标所占的文本，继续操作则会选中下一个相同的文本。
+
+Alt+F3 选中文本按下快捷键，即可一次性选择全部的相同文本进行
+Ctrl+L 选中整行，继续操作则继续选择下一行，效果和 Shift+↓ 效果一样。
+Ctrl+Enter 在下一行插入新行。举个栗子：即使光标不在行尾，也能快速向下插入一行
+Ctrl+Shift+[ 选中代码，按下快捷键，折叠代码。 Ctrl+Shift+] 选中代码，按下快捷键，展开代码
+
+ctrl+左键 多处编辑
+Ctrl+F2 设置书签
+Ctrl+shift+F2清除所有书签
+
+F6 单词检测拼写
+Ctrl+F 打开底部搜索框，查找关键字。
+  Ctrl+shift+F 在文件夹内查找
+
+Ctrl+P 打开搜索框。举个栗子：1、输入当前项目中的文件名，快速搜索文件   输入@和关键字，查找文件中函数名  输入 ：和数字，跳转到文件中该行代码，4、输入#和关键字，查找变量名
+浏览器中打开
+在tools中的 编译系统 新编译系统 里面清空路径一定是双斜线{ "cmd": ["C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe", "$file"] }
+
+ctags下载 http://prdownloads.sourceforge.net/ctags/ctags58.zip  

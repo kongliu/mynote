@@ -1,0 +1,18 @@
+  <script>
+        $(function(){
+		
+		
+			$(".tag").each(function(i){
+				$(this).bind("click",{index:i},function(e){
+				$('.right_content').hide();
+				$('.right_content').eq(e.data.index).show();
+				
+			})
+			})
+			});
+		
+		
+		
+		
+		
+    </script>

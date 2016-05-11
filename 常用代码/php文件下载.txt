@@ -1,0 +1,32 @@
+function downbooks()
+	{
+		set_time_limit(0);
+		
+		$id = $_GET['id'];	
+		
+		//查询图书简单信息
+		$world_books=M('world_books');
+		$info=$world_books->where('id='.$id)->find();
+
+		// 本地pdf地址
+		$local_name = './Public/books/pdf/'.$id.'.pdf';
+
+		// 下载名称设置
+		if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE"))
+		{
+			/* $JNameCN = urlencode($qikan_data['jnamCN']).''.$jiss.urlencode('年第').$issnbr.urlencode("期.pdf"); */
+			$BNAME = urlencode($info['name']).''.urlencode(".pdf");
+		}
+		else
+		{
+			$BNAME = $info['name'].''.".pdf";
+		}
+		$file_name = !empty($BNAME) ? $BNAME: time().rand(100,999);
+
+		// 下载
+		header("Content-type:application/pdf");
+		Header("Accept-Ranges: bytes");
+		Header("Accept-Length: ".filesize($local_name));
+		Header("Content-Disposition: attachment; filename=".$file_name);		
+		readfile($local_name);	
+	}

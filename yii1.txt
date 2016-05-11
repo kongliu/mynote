@@ -1,0 +1,19 @@
+CDbCriteria  中的compare方法 参数1 列名 2 值 3true局部匹配  4逻辑 默认                 AND %_是否起效
+		addCondition方法 1参 条件 2参 默认AND
+
+配置数据库连接main.php中的 componets
+array(
+	......
+	'components'=>array(
+		......
+		'db'=>array(
+			'class'=>'CDbConnection',
+			'connectionString'=>'mysql:host=localhost;dbname=testdb',
+			'username'=>'root',
+			'password'=>'password',
+			'emulatePrepare'=>true,  // needed by some MySQL installations
+		),
+	),
+)
+
+

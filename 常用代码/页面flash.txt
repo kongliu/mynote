@@ -1,0 +1,7 @@
+<object width="250" align="middle" height="250" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+<param value="always" name="allowScriptAccess">
+<param value="high" name="quality">
+<param value="opaque" name="wmode">
+<param value="http://m.kejet.net/ms/13b05/5e9f63e54.swf" name="movie">
+<embed width="250" align="middle" height="250" src="http://m.kejet.net/ms/13b05/5e9f63e54.swf" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" wmode="opaque">
+</object>

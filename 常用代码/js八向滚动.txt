@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>JavaScript 无缝八向滚动(兼容ie/ff)</title>
+</head>
+<body>
+<script type="text/javascript">
+var $ = function (id) {
+    return "string" == typeof id ? document.getElementById(id) : id;
+};
+
+var Class = {
+  create: function() {
+    return function() {
+      this.initialize.apply(this, arguments);
+    }
+  }
+}
+
+Object.extend = function(destination, source) {
+    for (var property in source) {
+        destination[property] = source[property];
+    }
+    return destination;
+}
+
+function addEventHandler(oTarget, sEventType, fnHandler) {
+    if (oTarget.addEventListener) {
+        oTarget.addEventListener(sEventType, fnHandler, false);
+    } else if (oTarget.attachEvent) {
+        oTarget.attachEvent("on" + sEventType, fnHandler);
+    } else {
+        oTarget["on" + sEventType] = fnHandler;
+    }
+};
+
+
+var Scroller = Class.create();
+Scroller.prototype = {
+  initialize: function(idScroller, idScrollMid, options) {
+    var oScroll = this, oScroller = $(idScroller), oScrollMid = $(idScrollMid);
+    
+    this.SetOptions(options);
+    this.scroller = oScroller;            //对象
+    this.timer = null;                    //时间
+    this.Side = [];                        //方向
+    this.side = 0;                        //参数
+    
+    //方向设置
+    switch (this.options.Side.toLowerCase()) {
+        case "right-down" :
+            this.Side = ["right", "down"];
+            break;
+        case "right-up" :
+            this.Side = ["right", "up"];
+            break;
+        case "left-down" :
+            this.Side = ["left", "down"];
+            break;
+        case "left-up" :
+            this.Side = ["left", "up"];
+            break;
+        case "right" :
+            this.Side = ["right"];
+            break;
+        case "left" :
+            this.Side = ["left"];
+            break;
+        case "down" :
+            this.Side = ["down"];
+            break;
+        case "up" :
+        default :
+            this.Side = ["up"];
+    }
+    
+    //用于上下滚动
+    this.heightScroller = parseInt(oScroller.style.height) || oScroller.offsetHeight;
+    this.heightList = oScrollMid.offsetHeight;
+    
+    //用于左右滚动
+    this.widthScroller = parseInt(oScroller.style.width) || oScroller.offsetWidth;
+    this.widthList = oScrollMid.offsetWidth;
+    
+    //js取不到css设置的height和width
+    
+    oScroller.style.overflow = "hidden";
+    oScrollMid.appendChild(oScrollMid.cloneNode(true));
+    oScrollMid.appendChild(oScrollMid.cloneNode(true));
+    
+    addEventHandler(oScroller, "mouseover", function() { oScroll.Stop(); });
+    addEventHandler(oScroller, "mouseout", function() { oScroll.Start(); });
+    
+    this.Start();
+  },
+  //设置默认属性
+  SetOptions: function(options) {
+    this.options = {//默认值
+      Step:            1,//每次变化的px量
+      Speed:        20,//速度(越大越慢)
+      Side:            "up"//滚动方向:"up"是上，"down"是下，"left"是左，"right"是右
+    };
+    Object.extend(this.options, options || {});
+  }, 
+  //上下滚动
+  ScrollUpDown: function() {
+    this.scroller.scrollTop = this.GetScroll(this.scroller.scrollTop, this.heightScroller, this.heightList);
+    
+    var oThis = this;
+    this.timer = window.setTimeout(function(){ oThis.Start(); }, this.options.Speed);
+  },
+  //左右滚动
+  ScrollLeftRight: function() {
+    //注意:scrollLeft超过1400会自动变回1400 注意长度
+    this.scroller.scrollLeft = this.GetScroll(this.scroller.scrollLeft, this.widthScroller, this.widthList);
+    
+    var oThis = this;
+    this.timer = window.setTimeout(function(){ oThis.Start(); }, this.options.Speed);
+  },
+  //获取设置滚动数据
+  GetScroll: function(iScroll, iScroller, iList) {
+    if(this.side > 0){
+        if(iScroll >= (iList * 2 - iScroller)){ iScroll -= iList; }
+    } else {
+        if(iScroll <= 0){ iScroll += iList; }
+    }
+    
+    return (iScroll + this.options.Step * this.side);
+  },
+  //开始
+  Start: function() {
+    
+    this.Side.push(this.Side.shift().toLowerCase());
+    
+    //document.getElementById("test").innerHTML+=s+",";
+    
+    //方向设置
+    switch (this.Side[0].toLowerCase()) {
+        case "right" :
+            if(this.widthList < this.widthScroller) return;
+            this.side = -1;
+            this.ScrollLeftRight();
+            break;
+        case "left" :
+            if(this.widthList < this.widthScroller) return;
+            this.side = 1;
+            this.ScrollLeftRight();
+            break;
+        case "down" :
+            if(this.heightList < this.heightScroller) return;
+            this.side = -1;
+            this.ScrollUpDown();
+            break;
+        case "up" :
+        default :
+            if(this.heightList < this.heightScroller) return;
+            this.side = 1;
+            this.ScrollUpDown();
+    }
+  },
+  //停止
+  Stop: function() {
+    clearTimeout(this.timer);
+  }
+};
+
+window.onload = function(){
+    new Scroller("idScroller", "idScrollMid",{ Side:"left-down" });
+    new Scroller("idScroller1", "idScrollMid1",{ Side:"left-up" });
+    new Scroller("idScroller2", "idScrollMid2",{ Side:"right-down" });
+    new Scroller("idScroller3", "idScrollMid3",{ Side:"right-up" });
+    
+    new Scroller("idScroller4", "idScrollMid4",{ Side:"left-up" });
+    new Scroller("idScroller5", "idScrollMid5",{ Side:"right-up" });
+    new Scroller("idScroller6", "idScrollMid6",{ Side:"left-down" });
+    new Scroller("idScroller7", "idScrollMid7",{ Side:"right-down" });
+    
+    new Scroller("idScroller8", "idScrollMid8",{ Side:"right-down" });
+    new Scroller("idScroller9", "idScrollMid9",{ Side:"left-down" });
+    new Scroller("idScroller10", "idScrollMid10",{ Side:"right-up" });
+    new Scroller("idScroller11", "idScrollMid11",{ Side:"left-up" });
+}
+</script>
+<style>
+*{margin:0px; padding:0px;}
+
+.Scroller {line-height:50px;overflow:hidden; border:1px solid #000000;}
+.ScrollMid {float:left;}
+.ScrollMid ul{width:250px;float:left;overflow:hidden;}
+.ScrollMid li{list-style:none;}
+
+.Scroller2 {overflow:hidden;float:left;}
+.ScrollMid2 {float:left;}
+.ScrollMid2 ul{width:100px;height:100px;float:left;overflow:hidden;}
+.ScrollMid2 li{list-style:none; width:100px; height:100px;}
+</style>
+<div id="idScroller" class="Scroller" style="width:250px; height:50px;">
+  <div style="width:500px">
+    <div id="idScrollMid" class="ScrollMid">
+      <ul>
+        <li> <a href="http://shundebk.cn/">1111111111111111111111</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<div id="idScroller1" class="Scroller" style="width:250px; height:50px;">
+  <div style="width:500px">
+    <div id="idScrollMid1" class="ScrollMid">
+      <ul>
+        <li> <a href="http://shundebk.cn/">1111111111111111111111</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<div id="idScroller2" class="Scroller" style="width:250px; height:50px;">
+  <div style="width:500px">
+    <div id="idScrollMid2" class="ScrollMid">
+      <ul>
+        <li> <a href="http://shundebk.cn/">1111111111111111111111</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<div id="idScroller3" class="Scroller" style="width:250px; height:50px;">
+  <div style="width:500px">
+    <div id="idScrollMid3" class="ScrollMid">
+      <ul>
+        <li> <a href="http://shundebk.cn/">1111111111111111111111</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<br /><br />
+
+<div style="width:200px;">
+  <div id="idScroller4" class="Scroller2" style="width:100px; height:100px;">
+    <div style="width:200px">
+      <div id="idScrollMid4" class="ScrollMid2">
+        <ul>
+          <li style="background:url(1.gif);"> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="idScroller5" class="Scroller2" style="width:100px; height:100px;">
+    <div style="width:200px">
+      <div id="idScrollMid5" class="ScrollMid2">
+        <ul>
+          <li style="background:url(2.gif);"> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="idScroller6" class="Scroller2" style="width:100px; height:100px;">
+    <div style="width:200px">
+      <div id="idScrollMid6" class="ScrollMid2">
+        <ul>
+          <li style="background:url(2.gif);"> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="idScroller7" class="Scroller2" style="width:100px; height:100px;">
+    <div style="width:200px">
+      <div id="idScrollMid7" class="ScrollMid2">
+        <ul>
+          <li style="background:url(1.gif);"> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br /><br />
+<div style="width:200px;">
+  <div id="idScroller8" class="Scroller2" style="width:100px; height:100px;">
+    <div style="width:200px">
+      <div id="idScrollMid8" class="ScrollMid2">
+        <ul>
+          <li style="background:url(2.gif);"> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="idScroller9" class="Scroller2" style="width:100px; height:100px;">
+    <div style="width:200px">
+      <div id="idScrollMid9" class="ScrollMid2">
+        <ul>
+          <li style="background:url(1.gif);"> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="idScroller10" class="Scroller2" style="width:100px; height:100px;">
+    <div style="width:200px">
+      <div id="idScrollMid10" class="ScrollMid2">
+        <ul>
+          <li style="background:url(1.gif);"> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="idScroller11" class="Scroller2" style="width:100px; height:100px;">
+    <div style="width:200px">
+      <div id="idScrollMid11" class="ScrollMid2">
+        <ul>
+          <li style="background:url(2.gif);"> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="test"></div>
+</body>
+</html>

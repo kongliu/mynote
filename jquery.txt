@@ -1,0 +1,92 @@
+在frame框架中使用jquery要在每一个frame中引入jquery文件
+
+
+$("#cat_ul_2").prev().children(".open,.close").attr("class","close");
+
+设置属性用.attr("属性名","属性值");
+.prev() 紧邻this的前一个同辈元素
+表示或的是,  $("p,div,.class") 表示选中所有的3种
+
+.height()用于查询或设置元素高度 空位查询 设置直接可用数字 默认单位px
+
+jQuery提供的each方法是对参数一提供的对象的中所有的子元素逐一进行方法调用
+
+取得css属性的值 $("p").css("color");
+设置大量css的值 $().css({"color":"#ff0011","background":"blue"});此种属性名称可以不加""如果中间有- 如background-color 则必须加""
+设置一个css $("p").css("color","red");
+
+.hide(参数为毫秒)
+var _gaq = _gaq || [];//定义一个数组，若_gaq不为空，则取自己的值，否则初始化为空
+
+jQuery对象都是通过$()函数制造出来的，$()函数就是一个jQuery的对象制造工厂。
+
+live是加强的blid 后添加的元素也能触发事件
+end()回到最近的一个"破坏性"操作之前。即，将匹配的元素列表变为前一次的状态。
+
+find()搜索所有与指定表达式匹配的元素。这个函数是找出正在处理的元素的后代元素的好方法
+
+window.onload与$(document).ready()的区别
+1.执行时间 
+
+        window.onload必须等到页面内包括图片的所有元素加载完毕后才能执行。
+        $(document).ready()是DOM结构绘制完毕后就执行，不必等到加载完毕。 
+
+2.编写个数不同
+
+         window.onload不能同时编写多个，如果有多个window.onload方法，只会执行一个
+         $(document).ready()可以同时编写多个，并且都可以得到执行
+
+3.简化写法
+
+         window.onload没有简化写法
+         $(document).ready(function(){})可以简写成$(function(){}); 
+
+用600毫秒缓慢的将段落的透明度调整到0.66  	$("p").fadeTo("slow", 0.66);
+
+用200毫秒快速将段落滑上，之后弹出一个对话框
+
+jQuery 代码:
+$("p").slideUp("fast",function(){
+   alert("Animation Done.");
+ });
+用200毫秒快速将段落滑上或滑下，之后弹出一个对话框
+
+jQuery 代码:
+$("p").slideToggle("fast",function(){
+   alert("Animation Done.");
+ });
+
+用500毫秒将段落移到left为50的地方并且完全清晰显示出来（透明度为1）
+
+jQuery 代码:
+$("p").animate({
+   left: 50, opacity: 'show'
+ }, 500);
+
+如果这个参数为true ，那么匹配的元素将显示;如果false ，元素是隐藏的
+
+jQuery 代码:
+$('#foo').toggle(showOrHide);
+
+//相当于
+if (showOrHide) {
+  $('#foo').show();
+} else {
+  $('#foo').hide();
+}      
+
+在.slideUp() 和 .fadeIn()之间延时800毫秒。
+
+HTML 代码:
+<div id="foo /">jQuery 代码:
+$('#foo').slideUp(300).delay(800).fadeIn(400);
+
+切换显示隐藏
+$(function()
+	{$("#user_manage").click(function()
+		{
+			$("#user_manage_box").slideToggle("5000");
+		}
+		)
+	}
+	)

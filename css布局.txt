@@ -1,0 +1,92 @@
+z-index:定义叠加顺序 必须要先甚至position才起效
+
+一、浏览器如何解析CSS
+
+  三种引用样式表：
+
+    1、嵌入式 <h1 style = "color : #foo ; font-size:18px;">Welcome</h1>
+    2、style标签 <style></style>
+    3、外部CSS文件 <link rel="stylesheet" href="stytlesheets/layout.css" type="text/css" media="screen" charset="utf-8" />
+
+二、盒模型：
+        HTML中每一个块元素基本上都可以看成一个盒子，这个盒子的宽和高，外加内边距、边框粗细和外边距这些东西，决定了元素的尺寸。如果定义了一个宽50像素的盒模型，padding=2px，border=1px，margin-left=5px，margin-right=5px，那么这个元素的宽将会是50+2+2+1+1+5+5，也就是66px。如果你打算将这样一个元素放进页面上一个50px宽的地方，那么这种计算就显得非常有必要了。
+
+       说明： IE浏览器一直以自己独特的算法来解析盒模型，他将边框和内边距当作内容的宽度计算，也就是说我们声明的区域里用来放置内容的宽度只有44像素（50-2-2-1-1），可以想象这会带来多大的问题！IE6和IE7采用了针对盒模型宽度的标准算法，但是只有在浏览器的标准模式呈现的时候才会激活这种算法。用适当的文档类型（doctype）设置和字符编码设置可以让IE在标准模式下运行。
+
+三、让内容居中：
+        确定了这个元素的宽为900px，顶部和底部的margin是0px，左右的margin会自动生成数值。
+[css] view plaincopy
+
+    #page{  
+         display : block;  
+         width : 900px;  
+         margin : 0px auto;  
+    }  
+
+四、将页面的单栏变成双栏：
+    4.1文档流
+理解元素的不同显示方式：块元素、内联元素、或者不可见元素。可以使用display属性来改变这个过程：display属性有数个可以选择的值，我们现在只关心其中的三个：block（以块元素的形式呈现）、inline（以内联元素的形式呈现）、none（这个值将元素从文档流中移除）；
+    4.2浮动
+将一个元素设定为浮动，意味着将这个元素从文档的“流”中单独拿出来，然后页面中剩下的内容会将这个元素围绕起来。如果让两个挨着的元素都变成浮动，你就得到了所需要的双栏布局效果，当然还需要给两个元素分别设定宽度。
+如：
+[html] view plaincopy
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+    <html xmlns="http://www.w3.org/1999/xhtml">  
+    <head>  
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+        <title>Foodbox</title>  
+        <link rel="stylesheet" href="float_wrap.css" type="text/css" media="screen" charset="utf-8" />  
+    </head>  
+    <body>  
+        <div class="callout">  
+            <p>你好啊，我现在在找工作，我想找一份J2EE或者Android开发的工作</p>  
+        </div>  
+        <div class="content">  
+            <p>好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！好好学习，天天向上！</p>  
+        </div>  
+      
+    </body>  
+    </html>  
+
+css
+[css] view plaincopy
+
+    .callout{  
+        float:left;  
+        width:108px;  
+    }  
+
+[css] view plaincopy
+
+    .content{  
+    <span style="white-space:pre">  </span>float:left;  
+    <span style="white-space:pre">  </span>width:400px;  
+    }  
+
+运行如下：
+
+
+
+    4.3背景颜色和浮动
+如果一个div中的所有子元素都离开了文档流，Firefox和其他遵守标准的浏览器也不会为这个div添加任何背景颜色和边框。实际上，这个div的高度会“塌陷”-----也就是说这个div的背景图片、边框或者背景颜色都是不可见的。
+解决方法：1、将容器也变成浮动的。一旦容器变成浮动的，背景颜色也就可以显示出来了
+                 2、在容器div关闭之前，加上一些其他的元素，比如一个换行标签，然后为这个元素加上清除浮动的属性clear：both。
+
+五、清除浮动
+只要一个元素被设置成为浮动的，那么他之后的所有元素都会环绕他显示，除非你让某一个元素回到正常的文档流。这就是所谓的清除浮动。当你有一个单栏布局紧跟这一个双栏布局的时候，这个技巧就派上用场了。在某个区域的css规则中用clear:both，可以让这个区域回到普通的文档流中。建议：一般在页脚做清除浮动的工作。
+
+
+/* 酷站代码整理 http://www.5icool.org */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;} 
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+ol,ul {list-style:none;}
+caption,th {text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;}
+q:before,q:after{content:'';}
+
+/*字体定义*/
+body {font-size:12px;font-family:simsun,arial,helvetica,clean,sans-serif;background:#fff;color:#2b2b2b}
+table {font-size:inherit;font:100%;} 

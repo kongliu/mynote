@@ -1,0 +1,110 @@
+IN适合于外表大而内表小的情况；EXISTS适合于外表小而内表大的情况。
+inner join 相等联接或内联接 
+right join 右联接 右表为准 左表无的补NULL
+left join 左联接  左表为准 右表无则补NULL
+inner join 主表和从表都存在的记录才会查出来，outer joins 如果主表中存在的记录，从表中不存在则用NULL替代
+
+union合并表 删除重复
+union all 不删除
+远程导出数据库
+先cd 到D:\wamp\bin\mysql\mysql5.5.24\bin 目录下
+（mysqldump -h119.12.12.11 -umysql-p --default-character-set=utf8 database --skip-lock-tables> d:\aspchina_net.sql
+需要n多次查询数据库的 就一次性全部取出来 放在数组中操作
+查 差值最小的行select * from sa where abs(s-20)=(select min(abs(s-20)) from sa)
+	select `longitude`,`latitude`,`position`,`precision`,`type`,`dateline`from user_track where code =100100008 and ABS(`dateline`-1441043734)=(select MIN(ABS(`dateline`-1441043734))
+ from user_track);
+跨库导入表create table admin_auth_assignment select * from craft.admin_auth_assignm
+
+跨库导入数据
+insert into eban.product_equipment(`id`,`code`) select `id`,`code` from craft.product_equipment;
+Query OK, 15015 rows affected
+insert into 数据库2.表1 select * from 数据库1.表1
+mysql lost connection during query 在my.ini配置文件 mysqld 节点下添加 max_allowed_packet = 100M
+
+
+error 1114tableisfull
+tmp_table_size = 512M
+max_heap_table_size = 512M
+
+mysql 错误提示非英文
+打开my.ini   找到
+[mysqld]
+port=3306
+explicit_defaults_for_timestamp = TRUE
+
+找到[mysqld]节点 在下面加上下面这句	
+language=d:/wamp/bin/mysql/mysql5.6.17/share/english
+
+然后重启
+
+yii关系查询
+User::model()->with(array(
+	'posts'=>array('order'=>'posts.create_time ASC'),
+	'profile',
+))->findAll();
+
+
+数据库写入失败如果sql语句没问题那么很可能是有不能为空的值未赋值
+***字段= 字符串 字符串一定要加引号!!!!!!!!!!!!!!!!!!!
+concat 在字段中值后追加
+SELECT code, 
+TYPE , FROM_UNIXTIME( start_time,  "%Y-%m-%d %H:%i:%s" ), FROM_UNIXTIME(end_time,  "%Y-%m-%d %H:%i:%s" ), FROM_UNIXTIME( dateline,  "%Y-%m-%d %H:%i:%s" ) dateline
+FROM  `user_day_rest_33` 
+WHERE code =10510133
+AND dateline >= UNIX_TIMESTAMP(  '2015-08-01' ) 
+AND dateline <= UNIX_TIMESTAMP(  '2015-08-10' ) 
+ORDER BY dateline DESC , 
+TYPE DESC 
+
+from_unixtime(dateline,"%Y-%m-%d") 
+还原MySQL数据库的命令mysql -hlocalhost -uroot -p --default-character-set=utf8 databasename < backupfile.sql
+mysqladmin -u root "old password" "new password"  修改密码
+检查表     bin中./myisamchk /usr/local/mysql/var/数据库名/表名.MYI;
+修复表是   上句后加-r 或者-o;
+ALTER TABLE table_name
+ADD column_name datatype
+ALTER TABLE table_name
+ALTER COLUMN column_name datatype 
+添加删除表字段
+SELECT LastName,FirstName FROM Persons
+查看列
+NSERT INTO 语句用于向表格中插入新的行。
+INSERT INTO table_name (列1, 列2,...) VALUES (值1, 值2,....)
+
+Update 语句用于修改表中的数据。
+UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
+
+show databases;
+show tables;
+use **;
+创建表 
+CREATE TABLE posts_tags (
+    relation_id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    post_id int UNSIGNED NOT NULL,
+    tag_id int UNSIGNED NOT NULL,
+    PRIMARY KEY(relation_id),
+    UNIQUE INDEX(post_id, tag_id)
+);
+
+MySQL有两种存储引擎：MyISAM和InnoDB。它们分别有自己的性能特点和考虑因素。总体来讲，MyISAM适合读数据很多的情况，InnoDB适合写数据很多的情况，但也有很多情况下正好相反。最大的区别是它们如何处理COUNT函数。
+
+MyISAM缓存有表meta-data，如行数。这就意味着，COUNT(*)对于一个结构很好的查询是不需要消耗多少资源的。然后对于 InnoDB来说，就没有这种缓存。举个例子，我们要对一个查询来分页，假设你有这样一个语句SELECT * FROM users LIMIT 5,10，而运行SELECT COUNT(*) FROM users LIMIT 5,10 时，对于MyISAM很快完成，而对InnoDB就需要和第一个语句相同的时间。MySQL有个SQL_CALC_FOUND_ROWS选项，可以告诉 InnoDB运行查询语句时就计算行数，之后再从SELECT FOUND_ROWS()来获取。这是MySQL特有的。但使用InnoDB有时候是非常必要的，你可以获得一些功能（如行锁定，stord procedure等）。
+用UPDATE直接编辑user表
+
+　　mysql -u root
+
+　　mysql> use mysql;
+
+　　mysql> UPDATE user SET Password = PASSWORD('newpass') WHERE user = 'root';
+
+　　mysql> FLUSH PRIVILEGES;
+
+在丢失root密码的时候，可以这样
+
+　　mysqld_safe --skip-grant-tables&
+
+　　mysql -u root mysql
+
+　　mysql> UPDATE user SET password=PASSWORD("new password") WHERE user='root';
+
+　　mysql> FLUSH PRIVILEGES;
