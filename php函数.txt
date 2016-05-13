@@ -1,3 +1,9 @@
+截取中文要用mb_substr( $str, $start, $length, $encoding ) 
+
+$str，需要截断的字符串 
+$start，截断开始处，起始处为0 
+$length，要截取的字数 
+$encoding，网页编码，如utf-8,GB2312,GBK 
 取时分秒的字符串用 strftime('%X',time())
 php 二位数组排序  array_multisort(需排序的列组成的数组,SORT_DESC,$data总数据)
 
