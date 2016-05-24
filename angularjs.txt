@@ -1,3 +1,4 @@
+angularjs 测试代码是jasmine
 input   的date 双向绑定 赋值的时候要先格式化 
  $scope.item.birthdayall = new Date($scope.item.birthdayall
 控制器中的服务 没有指定的服务不要写
