@@ -1,0 +1,9 @@
+读取不确定给的 DELETE PATCH 等 可以用
+你只需要使用下面的 $raw_input_stream 属性即可， 就可以在任何时候读取 php://input 流中的数据:
+
+$this->input->raw_input_stream;
+数据库自动连接
+application/config/autoload.php 中的 library 数组里添加 database:
+
+$autoload['libraries'] = array('database');
+或者在每个controller __construct中 $this->load->database();
