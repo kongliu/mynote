@@ -1,3 +1,4 @@
+时间格式转换UNIX_TIMESTAMP($string)  FROM_UNIXTIME( 1249488000, '%Y年%m月%d' )
 SELECT * FROM `mycomm_sys_webinar` WHERE `status`=0 and `star`IS NULL 判断为空要用这个 =null无效
 /*表示不执行后面所有的语句
 IN适合于外表大而内表小的情况；EXISTS适合于外表小而内表大的情况。
