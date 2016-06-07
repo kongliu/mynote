@@ -1,3 +1,14 @@
+think的session问题
+/Thinkphp/Common/funtion.php 中 修改为
+if(isset($name['expire']))          ini_set('session.gc_maxlifetime', $name['expire']);ini_set('session.cookie_lifetime', $name['expire']);
+配置项/Application/Common/conf/config.php中 注意要完整 不要只有expire
+//***********************************SESSION设置**********************************
+    'SESSION_OPTIONS'         =>  array(
+        'name'                =>  'BJYSESSION',                    //设置session名
+        'expire'              =>  24*3600*15,                      //SESSION保存15天
+        'use_trans_sid'       =>  1,                               //跨页传递
+        'use_only_cookies'    =>  0,                               //是否只开启基于cookies的session的会话方式
+    ),
 URL重写
 1、httpd.conf配置文件中加载了mod_rewrite.so模块
 2、AllowOverride None 将None改为 All

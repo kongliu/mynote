@@ -1,4 +1,35 @@
-﻿ ​<?php
+﻿关于引用传值
+<?php
+$arr = ['1', '2', '3', '4'];
+
+foreach ($arr as &$i) {}
+echo implode($arr, ', ')."\n";
+
+foreach ($arr as $i) {}
+echo implode($arr, ', ')."\n";
+?>
+
+which will output
+1, 2, 3, 4
+1, 2, 3, 3
+在第一次foreach中 最后$i =& $arr[3]; //4
+然后第二次foreach 中 第一次 $arr[3]因为引用的原因$i改变同时受影响 被overwrite成了1 第二次成2 第三次成3 然后$arr[3]最后是3
+
+
+
+DIRECTORY_SEPARATOR php内置常量 路径分隔符
+switch 中两个case 连续的 则是同时是下面的执行动作;
+
+$testvar = 2;switch ($testvar) {case '2':
+				case '3':
+
+			echo '22222';
+			break;
+则 输出22222;
+
+
+
+ ​<?php
 /**
  * 获取用户真实 IP
  */

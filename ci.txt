@@ -2,6 +2,8 @@
 你只需要使用下面的 $raw_input_stream 属性即可， 就可以在任何时候读取 php://input 流中的数据:
 
 $this->input->raw_input_stream;
+$params = $this->input->raw_input_stream;
+$params = json_decode($params,true) ;
 数据库自动连接
 application/config/autoload.php 中的 library 数组里添加 database:
 

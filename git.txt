@@ -1,0 +1,2 @@
+window name "push_setup" already exists in parent
+删除 .git\refs\remotes\meeting里的master 然后重新fetch

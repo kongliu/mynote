@@ -1,3 +1,8 @@
+var_dump(realpath('mytest')) ; 字符串文件[夹]存在则返回其绝对路径 否则为false;
+// 报告所有 PHP 错误
+error_reporting(-1); 0 全不报告
+
+
 json_encode转换索引数组出错 要加json_encode($c, JSON_FORCE_OBJECT)参数
 或者 手动变为关联数组 如 json_encode( array('data'=>$c) );则正常转换
 截取中文要用mb_substr( $str, $start, $length, $encoding [UTF-8]) 
