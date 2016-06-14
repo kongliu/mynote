@@ -1,0 +1,4 @@
+ Homestead 的配置加载 box 时有版本限制，但是限制版本用的版本号只有在下载的 box 中才有，所以需要在配置文件 ~/.homestead/homestead.yaml 中加入下面两行：
+
+box: your_custom_boxname
+version: "" // 关键是这行可以让 vagrant up 时不对 box 版本做检查
