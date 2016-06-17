@@ -1,0 +1,17 @@
+变量定义一般大写 使用时加上$
+read NAME 记录键盘输入并赋值给变量
+test -d filename 是否是目录 -f -x/r/w -a 是否存在 -s大小是否是0 -n变量是否为空 -z是否不为空
+$$ 本脚本的pid $!上一个pid $?下一个pid $*所有参数 $0-9 第几个参数 $#参数个数 $0 程序的文件名
+if then elif fi  多个 条件用 -a -o
+for 变量 in 名字表 select 变量 in 关键字   case 变量 in 		   do				字符串1) 命令列表
+do						;
+						字符串n) 命令列表n
+	命令		command 1	    esac
+			```	
+			command n
+		    done             
+done
+
+脚本调试
+sh -x script 执行并显示所有变量的值
+sh -n script	不执行 只检查语法
