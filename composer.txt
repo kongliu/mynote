@@ -1,3 +1,9 @@
  
  composer global require "laravel/homestead=~2.0"时产生错误reverting ./composer.json to its original content
 去掉上面中的版本号 让其自动选择版本 则可成功
+
+ set http_proxy=http://127.0.0.1:16823 使用代理
+set http_proxy=http://127.0.0.1:8087 //Windows
+export http_proxy=http://127.0.0.1:8087 //linux or Mac OS
+
+git 使用代理

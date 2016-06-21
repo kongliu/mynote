@@ -1,0 +1,8 @@
+配置nginx location /中增加此行
+location / {
+            try_files $uri $uri/ /index.php?$query_string;
+            
+        }
+$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+注册service 要放在$app->group之前
+route里面的路径已经在App\Http\Controllers下面 $app->get('test', 'TestController@showIndex');不要再加前面

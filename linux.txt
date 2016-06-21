@@ -1,3 +1,4 @@
+jobs 查看后台 程序 kill %num(jobs看到的) 关闭 fg %num 前台运行该job bg 反之
 cd /usr/local/mysql/bin/ 然后./mysql -uroot -p 回车
 
 
