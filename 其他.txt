@@ -1,3 +1,4 @@
+222
 hosts文件路径 windows/system32/drivers/etc/
 hosts文件格式127.0.0.1 http://www.anth.com/ 即是输入后面的时候自动解析成前面的ip 前面只能是ip目测 后面不能加路径 然后打开host文件的工具要用管理员身份运行才能保存成功.
 
