@@ -1,3 +1,6 @@
+修改数据库root密码以root登录：mysql -u root -p 
+2、mysql>use mysql; 
+3、mysql>update user set password='' where user='root'; 
 时间格式转换UNIX_TIMESTAMP($string)  FROM_UNIXTIME( 1249488000, '%Y年%m月%d' )
 SELECT * FROM `mycomm_sys_webinar` WHERE `status`=0 and `star`IS NULL 判断为空要用这个 =null无效
 /*表示不执行后面所有的语句
