@@ -1,0 +1,2 @@
+连接 为在当前工作目录 vagrant ssh
+ sudo -s 切换为root

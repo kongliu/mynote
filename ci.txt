@@ -9,3 +9,5 @@ application/config/autoload.php 中的 library 数组里添加 database:
 
 $autoload['libraries'] = array('database');
 或者在每个controller __construct中 $this->load->database();
+
+ci limit(数量,起始位置); 一定要弄清楚顺序!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
