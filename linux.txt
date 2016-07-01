@@ -1,3 +1,6 @@
+grep -v com 不显示匹配到的行 v表示反选
+ps -ef|grep memcached netstat -na|grep 11211
+
 jobs 查看后台 程序 kill %num(jobs看到的) 关闭 fg %num 前台运行该job bg 反之
 cd /usr/local/mysql/bin/ 然后./mysql -uroot -p 回车
 

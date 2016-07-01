@@ -1,0 +1,14 @@
+Installing Memcached on PHP 7.0
+
+sudo apt-get install gcc make autoconf libc-dev pkg-config
+sudo apt-get install zlib1g-dev
+sudo apt-get install libmemcached-dev
+git clone https://github.com/php-memcached-dev/php-memcached
+cd php-memcached
+git checkout php7
+/opt/sp/php7.0/bin/phpize
+PATH=/opt/sp/php7.0/bin:$PATH ./configure --disable-memcached-sasl
+make
+sudo make install
+sudo bash -c "echo extension=memcached.so > /etc/php7.0-sp/conf.d/memcached.ini"
+sudo service php7.0-fpm-sp restart

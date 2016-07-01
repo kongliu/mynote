@@ -1,3 +1,31 @@
+
+Mac作为开发环境可以非常方便地使用Linux的各种工具，但是每次手动启动memcache或redis等服务也比较麻烦，不过可以写个plist文件来自动启动，例如memcached，在<用户目录>/Library/LaunchAgents/下创建memcached.plist文件：
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>KeepAlive</key>
+    <true/>
+    <key>Label</key>
+    <string>memcached</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/usr/bin/memcached</string>
+      <string>-d</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>UserName</key>
+    <string>michael</string>
+  </dict>
+</plist>
+注意修改一下memcached的路径（如果不一样）和用户名。然后执行命令：
+
+launchctl load -w ~/Library/LaunchAgents/memcached.plist
+重启后就可以看到memcached自动启动了。
+
+当然，这种自启动是用户登陆时自启动的，跟Linux下从/etc/rcX.d/启动项随操作系统启动还不一样。不过一般没人把桌面版OS X当服务器使，所以用户登陆时自启动也是可以接受的。
 Memcache是什么
 Memcache是danga.com的一个项目，最早是为 LiveJournal 服务的，目前全世界不少人使用这个缓存项目来构建自己大负载的网站，来分担数据库的压力。
 它可以应对任意多个连接，使用非阻塞的网络IO。由于它的工作机制是在内存中开辟一块空间，然后建立一个HashTable，Memcached自管理这些HashTable。

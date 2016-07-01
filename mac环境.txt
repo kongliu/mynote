@@ -1,3 +1,10 @@
+launchctl list|grep memcached
+
+重启php
+killall php-fpm
+/usr/local/sbin/php-fpm &
+ssh root@123.56.234.94 term 连接远程
+
 PHP-fpm
 
 Install

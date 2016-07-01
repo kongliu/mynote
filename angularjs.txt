@@ -1,3 +1,8 @@
+!!!!!!
+property undefined 很可能是 所绑定的 变量未初始化
+如 select绑定sel.type 然后要 先初始化 $scope.sel={};
+
+
  <select class="form-control" ng-model="item.type" required  ng-options = "t.value as t.name for t in types">
                                 </select>
  $scope.types = [
