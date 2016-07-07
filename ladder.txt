@@ -1,0 +1,7 @@
+wget --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/pptp.sh
+给予权限
+chmod +x pptp.sh
+即可运行VPN一键安装包：
+./pptp.sh密码可以选择后复制。如果你记不住，可以再次运行命令
+增加一个新用户，删除用户，修改密码等可以使用编辑：
+vi /etc/ppp/chap-secrets
