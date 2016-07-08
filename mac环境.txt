@@ -1,3 +1,10 @@
+Èí¼ş 
+iterm2
+cyberduck tcp
+cornerstone  svn
+source tree 
+sequel 	pro  sql
+
 launchctl list|grep memcached
 
 ÖØÆôphp
