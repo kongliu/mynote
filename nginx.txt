@@ -1,3 +1,8 @@
+nginx -t 测试
+-s reload 重载
+ln -sfv /usr/local/etc/nginx/sites-available/meeting.app /usr/local/etc/nginx/sites-enabled/meeting.app
+
+
 一、  Nginx配置
 
 找到 conf 目录里的 nginx.conf 文件，配置Nginx

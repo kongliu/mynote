@@ -1,4 +1,5 @@
 Èí¼ş 
+mamp
 iterm2
 cyberduck tcp
 cornerstone  svn

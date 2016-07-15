@@ -1,0 +1,79 @@
+方式二：  
+  
+  
+    <?php    
+    ini_set('session.name', 'sid');//设置色session id的名字    
+    ini_set('session.use_trans_sid', 0);//不使用 GET/POST 变量方式    
+    ini_set('session.use_cookies', 1);//使用 COOKIE 保存 SESSION ID 的方式    
+    ini_set('session.cookie_path', '/');    
+    ini_set('session.cookie_domain', '.ichezone.com');//多主机共享保存 SESSION ID 的 COOKIE,注意此处域名为一级域名    
+    session_start();    
+    $_SESSION['usssser_oke'] = 'xxssssss';    
+    $_SESSION['user_oke'] = 'xxsss';      
+    ?>    
+  
+第三种方式：  
+  
+  
+    一级域名：    
+    session_start();    
+    setcookie("session_id",session_id(),time()+3600*24*365*10,"/",".ichezone.com");    
+     $_SESSION['user_name'] = '梁山良民';    
+    二级域名：    
+    session_id($_COOKIE['session_id']);    
+    session_start();    
+    $_SESSION['user_sssme'] = 222222;    
+  
+第四种方式：  
+  
+  
+    一级域名：    
+    ini_set("session.cookie_domain",'.ichezone.com');//注：该参数必须在sesson_start()之上，否则将不会生效    
+    session_start();    
+    $_SESSION['user_name'] = '梁山www良民';    
+    二级域名：    
+    ini_set("session.cookie_domain",'.ichezone.com');//注：该参数必须在sesson_start()之上，否则将不会生效    
+    session_start();    
+    $_SESSION['user_nassse'] = '梁山www良民';     
+  
+第五种方式：  
+  
+采用的p3p技术，实现原理，在访问网站x.com的时候，y.com程序触发y.com文件的写入sessionid值，sessionid值便可以获取，然后把seesion值存入数据库，取相同的sessionid值便可。这就要求y.com里面的程序文件必需能跨域访问,默认情况下，浏览器是不能跨域设置cookie的，加上p3p头后才行。在对应php文件加上:  
+   
+  
+  
+    header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');     
+  
+  
+   
+  
+这里直接引用网上的一篇博文了：  
+  
+    127.0.0.1        www.a.com    
+    127.0.0.1        www.b.com    
+        
+    首先：创建 a_setcookie.php 文件，内容如下：    
+        
+    <?php    
+    header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');    
+    setcookie("test", $_GET['id'], time()+3600, "/", ".a.com");    
+    ?>    
+        
+    然后：创建 a_getcookie.php 文件，内容如下：    
+        
+    <?php    
+    var_dump($_COOKIE);    
+    ?>    
+        
+    最后：创建 b_setcookie.php 文件，内容如下：    
+        
+    <script src="http://www.a.com/a_setcookie.php?id=www.b.com"></script>    
+        
+    －－－－－－－－－－－－－－－－－－－－－－－－－－－－    
+        
+    三个文件创建完毕后，我们通过浏览器依次访问：    
+        
+    http://www.b.com/b_setcookie.php    
+    http://www.a.com/a_getcookie.php    
+        
+    我们会发现，在访问b.com域的时候，我们并没有在a.com域设置上cookie值。去掉重新访问两文件设置成功   
