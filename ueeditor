@@ -1,0 +1,27 @@
+解压下载的包，放到你的项目中。
+在你的页面要插入编辑器的位置，插入代码：
+<!-- 加载编辑器的容器 -->
+<script id="container" name="content" type="text/plain" style="width:600px;height:200px;">
+    这里写你的初始化内容
+</script>
+在<head></head>标签最后，插入需要引用的文件和实例化编辑器的代码(注意修改引用文件的路径)：
+<!-- 样式文件 -->
+<link rel="stylesheet" href="./umeditor/themes/default/css/umeditor.css">
+<!-- 引用jquery -->
+<script src="./umeditor/third-party/jquery.min.js"></script>
+<!-- 配置文件 -->
+<script type="text/javascript" src="./umeditor/umeditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="./umeditor/umeditor.js"></script>
+<!-- 语言包文件 -->
+<script type="text/javascript" src="./umeditor/lang/zh-cn/zh-cn.js"></script>
+<!-- 实例化编辑器代码 -->
+<script type="text/javascript">
+    $(function(){
+        window.um = UM.getEditor('container', {
+            /* 传入配置参数,可配参数列表看umeditor.config.js */
+            toolbar: ['undo redo | bold italic underline']
+        });
+    });
+</script>
+这时候你再浏览器打开你的页面，看到下面这样的编辑器，说明你已部署成功。 部署成功

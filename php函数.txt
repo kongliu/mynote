@@ -1,3 +1,40 @@
+递归函数的return  要在递归的时候return
+private function auto_sort($sort){
+
+
+			$web_cms_article = M('cms_article');
+			$res = $web_cms_article->where('sort_order = '.$sort)->find();
+			if(!empty($res))
+			{
+				$sort = $sort + 1;
+				// echo $sort;
+				// exit;
+				return $this->auto_sort($sort);//此时要return
+				
+			}else{
+				return $sort;
+			}
+			
+		
+
+	}
+
+匿名函数从父作用域继承变量
+$message = 'hello';
+
+// 没有 "use"
+$example = function () {
+    var_dump($message);
+};
+echo $example();
+
+// 继承 $message
+$example = function () use ($message) {
+    var_dump($message);
+};
+echo $example();
+
+
 var_dump(realpath('mytest')) ; 字符串文件[夹]存在则返回其绝对路径 否则为false;
 // 报告所有 PHP 错误
 error_reporting(-1); 0 全不报告
