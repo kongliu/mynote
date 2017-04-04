@@ -1,0 +1,146 @@
+ubuntu安装ab
+
+apt-get install apache2-utils
+1
+centos安装ab
+
+yum install httpd-tools
+1
+ab的参数详细解释
+
+格式： ./ab [options] [http://]hostname[:port]/path
+
+参数：
+
+-n在测试会话中所执行的请求个数。默认时，仅执行一个请求。
+-c一次产生的请求个数。默认是一次一个。
+-t测试所进行的最大秒数。其内部隐含值是-n 50000，它可以使对服务器的测试限制在一个固定的总时间以内。默认时，没有时间限制。
+-p包含了需要POST的数据的文件。
+-P对一个中转代理提供BASIC认证信任。用户名和密码由一个:隔开，并以base64编码形式发送。无论服务器是否需要(即, 是否发送了401认证需求代码)，此字符串都会被发送。
+-T POST数据所使用的Content-type头信息。
+-v设置显示信息的详细程度-4或更大值会显示头信息，3或更大值可以显示响应代码(404,200等),2或更大值可以显示警告和其他信息。
+-V显示版本号并退出。
+-w以HTML表的格式输出结果。默认时，它是白色背景的两列宽度的一张表。
+-i执行HEAD请求，而不是GET。
+-x设置属性的字符串。
+-X对请求使用代理服务器。
+-y设置属性的字符串。
+-z设置属性的字符串。
+-C对请求附加一个Cookie:行。其典型形式是name=value的一个参数对，此参数可以重复。
+-H对请求附加额外的头信息。此参数的典型形式是一个有效的头信息行，其中包含了以冒号分隔的字段和值的对(如,”Accept-Encoding:zip/zop;8bit”)。
+-A对服务器提供BASIC认证信任。用户名和密码由一个:隔开，并以base64编码形式发送。无论服务器是否需要(即,是否发送了401认证需求代码)，此字符串都会被发送。
+-h显示使用方法。
+-d不显示”percentage served within XX [ms] table”的消息(为以前的版本提供支持)。
+-e产生一个以逗号分隔的(CSV)文件，其中包含了处理每个相应百分比的请求所需要(从1%到100%)的相应百分比的(以微妙为单位)时间。由于这种格式已经“二进制化”，所以比’gnuplot’格式更有用。
+-g把所有测试结果写入一个’gnuplot’或者TSV(以Tab分隔的)文件。此文件可以方便地导入到Gnuplot,IDL,Mathematica,Igor甚至Excel中。其中的第一行为标题。
+-i执行HEAD请求，而不是GET。
+-k启用HTTP KeepAlive功能，即在一个HTTP会话中执行多个请求。默认时，不启用KeepAlive功能。
+-q如果处理的请求数大于150，ab每处理大约10%或者100个请求时，会在stderr输出一个进度计数。此-q标记可以抑制这些信息。
+eg:
+
+### POST /user/login
+
+ab -n 100 -kc 10 -p user_login -T 'application/json' -H 'Accept-Encoding:gzip, deflate' -H 'accept-language:zh-Hans-CN;q=1, en-CN;q=0.9'  http://XXX/user/login
+
+
+##### request data
+文件 user_login 内容：
+{"email":"ws65536@qq.com","password":"ws65536"}
+1
+2
+3
+4
+5
+6
+7
+8
+### GET /default/index
+
+ab -n 1000 -c 100 http://XXX/default/index
+1
+2
+3
+4
+测试的同时可以在被测试的服务器上使用htop命令查看CPU和内存的实时使用情况：
+
+这里写图片描述
+
+关于ab详情可参考：apache性能测试工具ab使用详解
+
+二、配置优化
+
+nginx处理PHP请求有三个步骤。
+
+第一步：接受请求，发现是PHP请求，转向第二步。
+
+第二步：通过socket的方式，连接PHP-FPM的fast-cgi,让PHP-FPM处理请求。
+
+第三步：获得PHP-FPM处理结果，加上http报头，返回给客户端。
+
+所以，我们要提高nginx的PHP并发性能，我们需要做这三步。
+
+1.调大nginx的并发连接数（ 调nginx.conf 的worker_connections 和 worker_processes）。
+
+worker_connections : 每一个worker进程能并发处理（发起）的最大连接数（包含所有连接数）
+
+worker_processes ：指明了nginx要开启的进程数，据官方说法，一般开一个就够了，多开几个，可以减少机器io带来的影响。 一般为当前机器总cpu核心数的1到2倍。
+
+参考：
+
+nginx 并发数问题思考：worker_connections,worker_processes与 max clients
+
+Nginx工作原理和优化、漏洞
+
+2.调大php-fpm的并发连接数（调php-fpm.conf 的pm.max_children等)。
+
+本人用的是Ubuntu 14.04.4，PHP 5.5.9，以下目录结构对其他服务器环境可能不适用。
+
+由于在 /etc/php5/fpm/php-fpm.conf 中并没有找到 max_children ，于是使用以下命令进行查找：
+
+# 在/etc/php5/fpm 目录下查找所有文件，并依次在每个文件中查找"max_children"
+sudo find /etc/php5/fpm -name * | xargs grep "max_children"
+1
+2
+终于在 /etc/php5/fpm/pool.d/www.conf 中找到了 max_children 等相关配置。
+
+关于具体配置，请参考以下内容：
+
+[PHP手册]FastCGI 进程管理器（FPM）
+
+php-fpm的配置和优化
+
+PHP-FPM性能优化参考
+
+PHP FPM php-fpm.conf设置详解
+
+3.增加系统的最大文件数量限制(ulimit -n 65535)。
+
+由于NGINX处理PHP请求的第二步需要通过socket的方式和PHP-FPM通信，它能新建的最大socket数受到系统最大打开文件数的限制。新装的Linux默认只有1024，所以必须增加系统最大打开文件数目。
+
+ulimit -n 命令可以查看当前系统最大打开文件数。
+
+ulimit -n 65535 可以将系统最大打开文件数临时修改为65535，然而退出登录后就会失效。
+
+想要修改系统最大打开文件数，并永久生效：
+
+vi /etc/security/limits.conf
+
+# 添加如下的行
+* soft noproc 11000
+* hard noproc 11000
+* soft nofile 65535
+* hard nofile 65535
+1
+2
+3
+4
+5
+6
+7
+说明：
+
+* 代表针对所有用户
+
+noproc 是代表最大进程数
+
+nofile 是代表最大文件打开数
