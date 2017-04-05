@@ -1,3 +1,6 @@
+$this->db->set('play_count','play_count+1',false);
+        $this->db->where('id =',$video_id);
+        $updata_count = $this->db->update('video');
 在limit 之前$count = $this->db->count_all_results('',false);来获取没有limit之前的结果数量用来分页 false 不充值查询构造器
 读取不确定给的 DELETE PATCH 等 可以用
 你只需要使用下面的 $raw_input_stream 属性即可， 就可以在任何时候读取 php://input 流中的数据:

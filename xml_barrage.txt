@@ -1,0 +1,50 @@
+//弹幕文件名
+        $barrage_content = $data['barrage_content'];
+        $barrage_dir = realpath('assets').'/barrage/';
+        $barrage_file_name =  $barrage_dir.$data['video_id'].'.xml';
+        // var_dump($barrage_file_name);exit;
+        // var_dump(is_writeable($barrage_dir));exit;
+//文件夹是否可写 是否存在该文件
+        if(is_writeable($barrage_dir)){
+            if(file_exists($barrage_file_name)){
+            $dom = new DOMDocument('1.0','UTF-8');
+            $dom->formatOutput = true;
+            $dom->loadXML($barrage_file_name);
+            $i = $dom->getElementsByTagName('i')->item(0);
+            
+
+            $d =$dom->createElement('d',$barrage_content);
+            $d_attr = $dom->createAttribute('p');
+            $d_attr->value = $barrage_str;
+            $d->appendChild($d_attr);
+            $d = $i->appendChild($d);
+            $dom ->save($barrage_file_name);
+
+
+            }else{
+            $dom = new DOMDocument('1.0','UTF-8');
+            $dom->formatOutput= true;
+            // var_dump($dom);exit;
+            /*$write_barrage = fopen("newfile.txt", "w") or die("Unable to open file!");*/
+            $rootelement =$dom->createElement('i');
+            $rootelement = $dom->appendChild($rootelement);
+            $chatserver =$dom->createElement('chatserver','http://115.159.78.188:30002');
+            $chatserver=$rootelement->appendChild($chatserver);
+            $maxlimit =$dom->createElement('maxlimit','3000');
+            $maxlimit = $rootelement->appendChild( $maxlimit);
+
+            $d =$dom->createElement('d',$barrage_content);
+
+            $d_attr = $dom->createAttribute('p');
+            $d_attr->value = $barrage_str;
+            $d->appendChild($d_attr);
+            $d = $rootelement ->appendChild($d);
+            $dom->save($barrage_file_name );
+            // exit;
+
+
+
+
+
+
+            }

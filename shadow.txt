@@ -1,0 +1,19 @@
+云 	3071769378 jeepcn123
+服务器 	ip  115.159.78.188  jeep@123
+
+七牛 	contact@xiaomatv.cn
+ 
+jeepcn123
+	 pirPmDslw8lIxKgALdlm92075zw6cNSVzlcQLKoL
+	P6UCmFovoiY7RbVXxRB2MCRTGtpw7En0IGk9l54Z
+	/root/vendor/qiniu/php-sdk/
+
+mysql	 root root
+'http://'.BUCKET_DOMAIN.urlencode($v['title']);
+
+玩车囧 音乐品牌故事 1 3 2 6 10
+UUID 13607357db2299810579c8bb85568d2bc6f14293
+
+mysql	 root root
+114.215.68.160  git 8*0
+ 114.215.68.160:/home/gitrepository/mywork.git

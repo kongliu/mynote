@@ -1,3 +1,6 @@
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT
+解决mysql 3306无法远程连接
+
 grep -v com 不显示匹配到的行 v表示反选
 ps -ef|grep memcached netstat -na|grep 11211
 

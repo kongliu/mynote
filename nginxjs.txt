@@ -1,0 +1,5 @@
+  location ~ .*\.(js|css)?$
+        {
+            add_header Cache-Control no-store;
+            expires      -1; 
+        }
