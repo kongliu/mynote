@@ -1,3 +1,9 @@
+如果你需要指定 JOIN 的类型，你可以通过本函数的第三个参数来指定。可选项包括：left, right, outer, inner, left outer, 以及 right outer.
+
+$this->db->join('comments', 'comments.id = blogs.id', 'left');
+
+// 生成: LEFT JOIN comments ON comments.id = blogs.id
+
 $this->db->set('play_count','play_count+1',false);
         $this->db->where('id =',$video_id);
         $updata_count = $this->db->update('video');
