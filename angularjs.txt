@@ -1,3 +1,8 @@
+要传几个scope中的内容 可以先定义一个对象
+var videodata ={};
+videodata.item = $scope.item;
+ videodata.tags = $scope.tags;
+
 !!!!!!
 property undefined 很可能是 所绑定的 变量未初始化
 如 select绑定sel.type 然后要 先初始化 $scope.sel={};
@@ -27,3 +32,5 @@ ng-if = "item.status  == 1" 变量不用{{}}
 
 未定义的response 是后台查询出错
 操作弹出框的变量的函数要卸载弹出层内 注意$scope作用域
+
+加载ng_module 时 注意js文件要在angular加载之后再加载
