@@ -1,4 +1,4 @@
- 
+使用js插件 注意js文件的加载顺序 
 
 因此sessionStorage不是一种持久化的本地存储，仅仅是会话级别的存储。而localStorage用于持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的。
 一、web storage和cookie的区别

@@ -1,0 +1,33 @@
+
+/*根据分类数据生成分类树
+*
+*
+*
+*/
+   private $column_tee;
+    private function createColumnTree($tree_array, $pid, $depth){
+          
+        foreach ($tree_array as $key => $value) {
+            if($value['pid']==$pid){
+                $this->column_tree[] = array('cid'=>$value['cid'],'column_name'=>$value['column_name'],'depth'=>$depth);
+                $this->createColumnTree($tree_array,$value['cid'],$depth+1);
+                
+            }
+        }
+    }
+/*
+*获取视频所有分类
+*
+*
+*/
+    public function getAllColumns(){
+
+        $this->db->select('*');
+        $this->db->from('video_column');
+        $query = $this->db->get();
+        $all_columns = $query->result_array();
+        $this->createColumnTree($all_columns,0,1);
+        return $this->column_tree;
+        
+
+
