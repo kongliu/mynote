@@ -1,3 +1,5 @@
+yum出错 如果因为导入的源有错误 可以进去/etc/yum.repo.d中 将该源文件删除
+
 secureCRT 改变配色不要选中仿真后面的ansi颜色
 
 每天4点备份mysql数据；

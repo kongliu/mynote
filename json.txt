@@ -1,3 +1,5 @@
+print json_encode(array('code'=>1, 'danmaku'=>$res),JSON_UNESCAPED_UNICODE );
+不对字符编码
 json_decode ($param,true);true表示解码出的是数组 false 为对象
 由于Sencha Touch 2这种开发模式的特性，基本决定了它原生的数据交互行为几乎只能通过AJAX来实现。
 
