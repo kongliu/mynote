@@ -1,3 +1,7 @@
+crontab  中每3小时  表示方式 0 */3 * * * /bin/sh /data/backup_mysql.sh
+
+                       如果是* */3 * * * /bin/sh /data/backup_mysql.sh则为每3小时的每分钟执行一次
+
 yum出错 如果因为导入的源有错误 可以进去/etc/yum.repo.d中 将该源文件删除
 
 secureCRT 改变配色不要选中仿真后面的ansi颜色
