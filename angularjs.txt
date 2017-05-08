@@ -1,3 +1,4 @@
+_.是lodash.js 中的 是一个工具库
 要传几个scope中的内容 可以先定义一个对象
 var videodata ={};
 videodata.item = $scope.item;

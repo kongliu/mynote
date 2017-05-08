@@ -1,0 +1,4 @@
+流程->appBootstrap.js 判断是否已登录  是 直接跳转
+					否 /app/views/index.html 	controller/indexController.js 进行登录  再login 中的login方法进行身份判断 并返回不同的用户数据中的role 并在此控制器js进行写localshorage 等操作
+
+在appRoute.js中 的 rights 指定该页面中的 可打开用户 在 menu.html 中用ng-if 判断是否显示该menu
