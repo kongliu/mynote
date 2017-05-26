@@ -1,3 +1,24 @@
+首先找到你安装Centos的光盘或者ISO文件，只要系统版本一样即可。拷贝如下文件到系统中：
+可在此镜像站下载centos rpm 包 修复用
+http://mirrors.163.com/centos/6.9/os/x86_64/Packages/
+python-2.6.6-36.el6.x86_64.rpm
+python-urlgrabber-3.9.1-8.el6.noarch.rpm
+python-devel-2.6.6-36.el6.x86_64.rpm
+python-libs-2.6.6-36.el6.x86_64.rpm
+yum-3.2.29-40.el6.centos.noarch.rpm
+/usr/local/src/Python-2.6.6
+
+cd /usr/local/src/Python-2.6.6/
+rpm -Uvh --replacepkgs *.rpm
+#出现如下提示
+Preparing... ########################################### [100%]
+1:python-libs ########################################### [ 20%]
+2:python ########################################### [ 40%]
+3:python-urlgrabber ########################################### [ 60%]
+4:yum ########################################### [ 80%]
+5:python-devel ########################################### [100%]
+执行yum命令，你熟悉的界面出现了~~
+ 
 ps -aux  
 USER域指明了是哪个用户启动了这个命令;
 用户可以查看某个进程占用了多少CPU;
