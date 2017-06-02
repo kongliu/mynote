@@ -1,3 +1,4 @@
+DocBlockr  代码注释
 sublime汉化汉字显示方框
 在user 中加"dpi_scale": 1.0 
 在新窗体中打开文件在user中加"preview_on_click": false,
