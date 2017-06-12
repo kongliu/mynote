@@ -1,3 +1,8 @@
+安装gitlab 启动postfix 失败 Job for postfix.service failed
+问题出现在网络设置，ipv6网段，
+vim /etc/hosts     //注释掉下面一行
+#::1     localhost localhost.localdomain localhost6 localhost6.localdomain6
+
 首先找到你安装Centos的光盘或者ISO文件，只要系统版本一样即可。拷贝如下文件到系统中：
 可在此镜像站下载centos rpm 包 修复用
 http://mirrors.163.com/centos/6.9/os/x86_64/Packages/

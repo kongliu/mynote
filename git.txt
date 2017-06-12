@@ -1,3 +1,26 @@
+GIT 免密码提交 ssh-keygen -t rsa -C "xkwg@163.com"
+Git服务器打开RSA认证
+
+　　在Git服务器上首先需要将/etc/ssh/sshd_config中将RSA认证打开：
+RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile  .ssh/authorized_keys
+　　在/home/git下创建.ssh目录，然后创建authorized_keys文件，把id_rsa.pub里面的内容复制到authorized_keys文件中
+
+4.修改权限
+　　重要：
+
+　　修改 .ssh 目录的权限为 700
+
+　　修改 .ssh/authorized_keys 文件的权限为 600
+
+chmod 700 .ssh
+cd .ssh
+chmod 600 authorized_keys
+然后将C:\Users\Administrator\.ssh\id_rsa.pub中的写入
+
+
+
 window name "push_setup" already exists in parent
 删除 .git\refs\remotes\meeting里的master 然后重新fetch
 git提交自动同步
