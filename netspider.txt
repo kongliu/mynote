@@ -1,0 +1,32 @@
+加快搬瓦工VPS速度方法一：net-speeder安装与效果
+1、net-speeder项目主页：
+代码主页：https://github.com/snooda/net-speeder
+2、net-speeder 适用于高延迟不稳定链路上优化单线程下载速度，安装代码如下：
+1：下载源码并解压
+wget https://github.com/snooda/net-speeder/archive/master.zip
+unzip master.zip
+2：准备编译环境
+debian/ubuntu：
+#安装libnet-dev：
+apt-get install libnet1-dev
+#安装libpcap-dev：
+apt-get install libpcap0.8-dev
+centos：
+#下载epel：https://fedoraproject.org/wiki/EPEL/zh-cn 例：CentOS6 64位：
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+#（如果是centos5，则在epel/5/下）
+#安装epel：
+rpm -ivh epel-release-6-8.noarch.rpm
+#然后即可使用yum安装：
+yum install libnet libpcap libnet-devel libpcap-devel
+编译：
+Linux Cooked interface使用编译（venetX，OpenVZ）：
+sh build.sh -DCOOKED
+普通网卡使用编译（Xen，KVM，物理机）：
+sh build.sh
+使用方法(需要root权限启动）：
+#参数：./net_speeder 网卡名 加速规则（bpf规则）
+#ovz用法(加速所有ip协议数据)：
+./net_speeder venet0 "ip"
+3、执行./net_speeder venet0 "ip"，可以看到net-speeder运行成功。
+nohup ./net_speeder venet0 "ip" >/dev/null 2>&1 &
