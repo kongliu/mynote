@@ -1,0 +1,264 @@
+跳到内容
+ONLINE SERVICE SHOPPING
+ 统计	 LOG IN
+DIARIES
+Kcptun + Shadowsocks加速方案
+
+2016 年 6 月 23 日	/ 35.44K次浏览
+文章目录
+[隐藏]
+Kcptun介绍
+相关项目
+部署Kcptun
+配置客户端
+Shadowsocks 客户端配置
+速度实测
+今天介绍一个能替代 Finalspeed 的项目 — Kcptun。
+
+Kcptun介绍
+Kcptun 是一个非常简单和快速的，基于 KCP 协议的 UDP 隧道，它可以将 TCP 流转换为 KCP+UDP 流。而 KCP 是一个快速可靠协议，能以比 TCP 浪费10%-20%的带宽的代价，换取平均延迟降低 30%-40%，且最大延迟降低三倍的传输效果。
+
+Kcptun 是 KCP 协议的一个简单应用，可以用于任意 TCP 网络程序的传输承载，以提高网络流畅度，降低掉线情况。由于 Kcptun 使用 Go 语言编写，内存占用低（经测试，在64M内存服务器上稳定运行），而且适用于所有平台，甚至 Arm 平台。
+
+Kcptun 工作示意图：
+
+kcptun
+
+KCP 协议：https://github.com/skywind3000/kcp
+
+Kcptun 项目地址：https://github.com/xtaci/kcptun
+
+如果你在使用过程中有什么问题，也可以添加博主QQ寻求帮助。
+
+相关项目
+以下为 Kcptun 的相关项目，如果有兴趣，可以了解一下。
+
+1.Kcp-server：https://github.com/clangcn/kcp-server
+
+Kcp-server 是在 Kcptun 的基础上，添加了配置文件的支持，并简化了安装过程，一条命令即可配置完毕。
+
+如果你是小白，而且看了后面的教程也看不懂的话，推荐直接使用 Kcp-server 吧，就是更新较原版略慢。
+
+2.Shadowsocks-Plus：https://github.com/shadowsocks-plus/shadowsocks-plus
+
+基于 Shadowsocks Go 版本，加入了以下特性：
+
+启动后降低权限至 nobody , 增强安全性；
+与 kcptun 集成，配合相应客户端可加速传输；
+网页控制面板。
+部署Kcptun
+2016.06.20 v20160620发布。
+
+2016.06.17 添加客户端开机自启批处理，重写软件启动vbs脚本。
+
+2016.06.16 v20160616发布，现在客户端支持多线程连接（尝试：-conn 4），请使用v20160615的用户尽快升级。（PS：作者太勤快了，佩服。）
+
+本教程以 CentOS 6.5 64位为例。
+
+首先下载 Kcptun，可以到 GitHub 上获取最新版：https://github.com/xtaci/kcptun/releases
+
+用 Xshell 或者 Putty 登陆服务器，下载 Kcptun 的预编译版：
+
+1
+2
+3
+4
+mkdir kcptun
+cd kcptun
+wget https://github.com/xtaci/kcptun/releases/download/v20160620/kcptun-linux-amd64-20160620.tar.gz
+tar -zxf kcptun-linux-amd64-*.tar.gz
+注：请根据你的系统下载对应版本。32位系统下载 kcptun-linux-386-*.tar.gz，64位系统下载 kcptun-linux-amd64-*.tar.gz
+
+解压之后有两个文件：client_linux_amd64 和 server_linux_amd64，一个用于服务器，一个用于客户端。
+
+这个项目目前还没有 init 脚本，也还不支持配置文件，于是我写了两个简单的 sh 脚本，用于启动和关闭服务端。请在服务端程序相同目录下新建两个文件 start.sh 和 stop.sh。
+
+创建 start.sh
+
+1
+vi start.sh
+写入以下内容：
+
+1
+./server_linux_amd64 -l :29900 -t 127.0.0.1:8388 -key test -mtu 1400 -sndwnd 2048 -rcvwnd 2048 -mode fast2 > kcptun.log 2>&1 &
+server_linux_amd64 对应服务端文件名，请对应修改。
+
+-l 表示 Kcptun 的服务端监听端口，用于接收外部请求和发送数据，默认 29900；
+-t 表示要加速的地址，我这里设置的是我服务器的 Shadowsocks 端口；
+-key 是 Kcptun 的验证密钥，服务端和本地必须一致才能通过验证，请自行设置；
+-mode 为加速模式，默认 fast，这里使用 fast2。
+响应速度：
+
+fast3 > [fast2] > fast > normal > default
+
+有效载荷比：
+
+default > normal > fast > [fast2] > fast3
+
+中间 mode 参数比较均衡，总之就是越快越浪费带宽，推荐模式 fast2。
+
+其他参数，请使用 ./server_linux_amd64 -h 查看，更深层次的参数调整需要理解 KCP 协议，并通过“隐藏参数”调整。巭孬嫑乱动
+
+下面是作者给的配置样例，适用大部分ADSL接入（非对称上下行）的参数（实验环境电信100M ADSL）。其它带宽请按比例调整，比如 50M ADSL，把 CLIENT 的 -sndwnd -rcvwnd 减掉一半，SERVER 不变。
+
+1
+2
+SERVER:   -mtu 1400 -sndwnd 2048 -rcvwnd 2048 -mode fast2
+CLIENT:   -mtu 1400 -sndwnd 256 -rcvwnd 2048 -mode fast2
+创建 stop.sh
+
+1
+vi stop.sh
+写入以下内容：
+
+1
+2
+3
+4
+5
+PID=`ps -ef | grep server_linux_amd64 | grep -v grep | awk '{print $2}'`
+if [[ "" !=  "$PID" ]]; then
+  echo "killing $PID"
+  kill -9 $PID
+fi
+然后可以启动服务端：
+
+1
+sh start.sh
+kcptun.log 为日志信息。
+
+停止服务端请使用：
+
+1
+sh stop.sh
+配置客户端
+以本地 Windows 64位系统为例，首先下载 Kcptun 的 Windows 版本。
+
+我这里先新建一个文件夹，命名为 Kcptun，然后下载：
+
+1
+https://github.com/xtaci/kcptun/releases/download/v20160620/kcptun-windows-amd64-20160620.tar.gz
+解压到文件夹下。
+
+由于 Kcptun 是控制台程序，所以我选择使用 vbs 脚本，来达到后台运行的目的。
+
+新建 run.vbs
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+Dim RunKcptun
+Set fso = CreateObject("Scripting.FileSystemObject")
+Set WshShell = WScript.CreateObject("WScript.Shell")
+'获取文件路径
+currentPath = fso.GetFile(Wscript.ScriptFullName).ParentFolder.Path & "\"
+'软件运行参数
+exeConfig = "client_windows_amd64.exe -l :12948 -r 10.10.10.10:29900 -key test -mtu 1400 -sndwnd 256 -rcvwnd 2048 -mode fast2 -conn 4"
+'日志文件
+logFile = "kcptun.log"
+'拼接命令行
+cmdLine = "cmd /c " & currentPath & exeConfig  & " > " & currentPath & logFile & " 2>&1"
+'启动软件
+WshShell.Run cmdLine, 0, False
+'等待1秒
+'WScript.Sleep 1000
+'打印运行命令
+'Wscript.echo cmdLine
+Set WshShell = Nothing
+Set fso = Nothing
+'退出脚本
+WScript.quit
+本地监听端口为 12948；服务器 IP 地址 10.10.10.10 端口 29900；验证密钥和服务端一致。其他参数说明见上面服务端配置的说明。
+
+v20160616 新增参数：-conn 4，使用4线程连接。
+
+新建 stop.bat
+
+1
+taskkill /f /im client_windows_amd64.exe
+然后双击 run.vbs 运行程序，使用 stop.bat 来停止程序，kcptun.log 为输出的日志信息。
+
+开机启动配置：
+
+新建 startUp.bat：
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+@echo off
+title Kcptun 开机启动设置
+mode con cols=50 lines=20
+color A
+echo.
+echo.                Kcptun 启动项设置
+echo.
+echo.     此批处理可以将 Kcptun 客户端添加到开机启动
+echo.
+echo.       请将该文件放到 run.vbs 相同目录后运行
+echo.
+echo.   查看说明：https://blog.kuoruan.com/102.html
+echo.
+set /p ST=输入 y 添加开机启动，输入 n 取消开机启动：
+if /I "%ST%"=="y" goto addStartup
+if /I "%ST%"=="n" goto delStartup
+:addStartup
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Kcptun Client" /t REG_SZ /d "\"%~dp0run.vbs\"" /F>NUL
+exit
+:delStartup
+reg delete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "kcptun Client" /F>NUL 2>NUL
+exit
+Shadowsocks 客户端配置
+在客户端中新建服务器：
+
+服务器 IP 填写本机：127.0.0.1
+服务器端口填写：12948
+正确填写你的 Shadowsocks 密码，加密方式，协议和混淆方式。
+
+切换到该服务器上，测试是否正确运行。
+
+速度实测
+我用的服务器是搬瓦工 512M 内存，费利蒙机房，以此测试加速效果。
+
+按结论看，Kcptun 的加速效果略逊于 Finalspeed，估计需要细调配置。
+刚运行 Finalspeed 时，内存占用就达到了 9.1% 也就是接近 47M；而此时 Kcptun 占用 0.4%，也就是 2M左右。
+YouTube 1440p 满跑情况下，FInalspeed 最高内存占用 15.4%，接近 79M；而此时 Kcptun 占用 3% 左右，即 15.5M。
+速度方面，Finalspeed 最大速度达到了10000 Kbps +，Kcptun 6000+ Kbps。
+以上结论为本人测试所得，仅作为参考；实际情况请自行测试，如有纰漏，欢迎指出。
+
