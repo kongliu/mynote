@@ -1,2 +1,5 @@
 xpath
-可以先将请求到的页面存下来再 用xpath
+可以先将请求到的页面存下来再 用xpath 找怎么解析
+
+content_url_regexes 要用|转义 问号 and 等符号 
+
