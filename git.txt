@@ -1,3 +1,15 @@
+git免密码登录 报错
+CentOS 6.3系统下，用户user的home目录：/home/user的权限变成了777，造成不能正常登陆SSH，报如下错误：Permission denied (publickey,gssapi-with-mic
+ 
+SSH对公钥、私钥的权限和所有权的要求是非常严格的，总结如下：
+1、下面两个目录的所有权必须是user，所属组也应该是user，权限必须为700
+\home\user
+\home\user\.ssh
+!!!!!2、下面公钥文件的所有权必须是user，所属组也应该是user，权限必须为644
+\home\user\.ssh\authorized_keys
+
+
+
 GIT 免密码提交 ssh-keygen -t rsa -C "xkwg@163.com"
 Git服务器打开RSA认证
 
