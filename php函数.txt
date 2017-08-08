@@ -1,3 +1,8 @@
+字符串查找注意编码问题!!!
+is_numeric(strpos($html, iconv('UTF-8', 'GB2312','发送成功') ))
+iconv('UTF-8', 'GB2312', '内容');编码转换
+
+
 递归函数的return  要在递归的时候return
 private function auto_sort($sort){
 

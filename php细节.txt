@@ -8,3 +8,4 @@ rawurlencode()取代urlencode() 不把空格转换成+
 a.id as a.subject for a in list
 http://115.159.78.188:3001//assets/user_pic/2.jpg  域名后面的路径是 index的位置开始
 
+php 的extension 不一定在php.ini中 也可在phpinfo 扩展 的配置目录中 找到 如 --with-config-file-scan-dir=/usr/local/php/conf.d  中的文件中  如果在安装中已经打开则配置文件中则不用打开

@@ -1,3 +1,11 @@
+Expression of SELECT list is not in GROUP BY clause and contains nonaggregated column this i
+解决方法
+ vim /etc/mysql/conf.d/mysql.cnf
+Scroll to the bottom of file Copy and paste
+
+[mysqld]sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+
+ 导入表mysql -uusername -ppassword db1 < tb1tb2.sql
 设置外键 是1005错误 有可能是该表的字符集不是utf-8  unicode
 在 SQL 中增加 HAVING 子句原因是，WHERE 关键字无法与合计函数一起使用
 SELECT Customer,SUM(OrderPrice) FROM Orders

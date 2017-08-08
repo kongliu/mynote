@@ -1,0 +1,1 @@
+ mysqld_safe --skip-grant-tables & 数据库密码或者root host 配置错误
