@@ -1,4 +1,5 @@
 git免密码登录 报错
+文件夹和文件给的权限过多!!!!过多!!!过多!!!
 CentOS 6.3系统下，用户user的home目录：/home/user的权限变成了777，造成不能正常登陆SSH，报如下错误：Permission denied (publickey,gssapi-with-mic
  
 SSH对公钥、私钥的权限和所有权的要求是非常严格的，总结如下：
