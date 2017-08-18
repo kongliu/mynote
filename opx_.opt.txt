@@ -1,2 +1,5 @@
 nginx 日志分析 安装goaccess  goaccess -f 文件地址 -c
 awk '{print $1}' /home/wwwlogs/api.log |sort|uniq -c|sort -n 统计日志ip
+ connect() to unix:/tmp/php-cgi.sock failed (13: Permission denied)
+ 应该是phpfpm 超时过多 没有释放资源  还会导致数据库资源占满
+ 重启 php-fpm  php-fpm.conf中	pm.max_children = 200
