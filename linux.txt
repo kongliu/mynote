@@ -1,3 +1,8 @@
+
+统计log ip最多的 awk '{print $1}' /home/wwwlogs/api.log |sort|uniq -c|sort -n
+dmesg | grep -E -i -B100 'killed process'
+查看系统崩溃
+
 crontab 不执行 service crond start!!!!
 安装gitlab 启动postfix 失败 Job for postfix.service failed
 问题出现在网络设置，ipv6网段，

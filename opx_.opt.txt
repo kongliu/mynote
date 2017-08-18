@@ -1,0 +1,2 @@
+nginx 日志分析 安装goaccess  goaccess -f 文件地址 -c
+awk '{print $1}' /home/wwwlogs/api.log |sort|uniq -c|sort -n 统计日志ip
