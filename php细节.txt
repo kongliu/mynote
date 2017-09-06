@@ -1,3 +1,4 @@
+array(array());非空
 composer config -g repo.packagist composer https://packagist.phpcomposer.com
 laravel 500 权限问题 storage bootstrap/cache 记得-R  chmod -R 777
 array_unshift()返回值是插入的值  一定不要复制给本身   `只能插入一个值 不能为k=>v!

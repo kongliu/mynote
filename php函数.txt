@@ -1,3 +1,8 @@
+ preg_match 一次后停止 
+ pre_maech_all 全文匹配
+ preg_replace_callback($reg, array($this, 'replace'), $text); 第二个可以传匿名函数 也可以是类的方法 返回值为要替换成的内容
+
+
 字符串查找注意编码问题!!!
 is_numeric(strpos($html, iconv('UTF-8', 'GB2312','发送成功') ))
 iconv('UTF-8', 'GB2312', '内容');编码转换

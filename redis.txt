@@ -1,2 +1,3 @@
 
-LIST没有get操作
+LIST没有get操作 用lpop  lpush 等
+不要用keys * 字段过大会crash
