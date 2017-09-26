@@ -1,0 +1,28 @@
+设置代理的时候 因为socks5本身并不是http代理 所以先要转换成http
+
+Convert Shadowsocks into an HTTP proxy
+clowwindy edited this page on 5 Aug 2013 · 3 revisions
+ Pages 33
+Download
+Tutorial
+Wiki
+Troubleshooting
+Clone this wiki locally
+
+
+https://github.com/shadowsocks/shadowsocks.wiki.git
+
+First run polipo with parent proxy set to Shadowsocks:
+
+apt-get install polipo
+service polipo stop
+polipo socksParentProxy=localhost:1080
+Then you can play with the HTTP proxy:
+
+http_proxy=http://localhost:8123 apt-get update
+
+http_proxy=http://localhost:8123 curl www.google.com
+
+http_proxy=http://localhost:8123 wget www.google.com
+或者换一个软件源
+apm config set registry http://registry.npm.taobao.org

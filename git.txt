@@ -1,3 +1,4 @@
+gitkraken 拉取失败 无法创建本地文件 是权限问题 sudo chown -R 项目目录
 git免密码登录 报错
 文件夹和文件给的权限过多!!!!过多!!!过多!!!
 CentOS 6.3系统下，用户user的home目录：/home/user的权限变成了777，造成不能正常登陆SSH，报如下错误：Permission denied (publickey,gssapi-with-mic
