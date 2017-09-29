@@ -1,0 +1,203 @@
+
+
+近日在学习爬虫的时候遇到一个小问题，当在抓取某些网页的时候，在线测试通过的正则匹配在用PHP抓取时却发现只能抓取某些非关键元素。
+经过排查，才发现在抓取该页面（是一个电商页面）时，该页面的详情页面是通过JS二次请求动态添加上去的，而PHP(通过curl函数库的方式)只是将其静态页面抓下，所以正则匹配的不是整个渲染好的完整页面，而是一个隐藏了详情板块的页面。
+
+解决方案#
+
+大致涉猎了一下，一般业界的解决方法有二：
+
+分析JS文件，模拟JS中的请求
+想方法运行JS，抓取JS运行渲染完毕后的页面(本文讲述的方法)
+phantomjs#
+
+￼file
+phantomjs 基于WebKit、开源的服务器端JavaScript API, 采用了WebKit内核的phantomjs可以模拟浏览器运行网页，可以浅显的把它理解为除了把访问的页面显示出来。
+除此之外，其他浏览器具备的功能它都有了(DOM handling, CSS selector, JSON, Canvas, and SVG)，所以可以通过调用它来运行含有JS文件且需要运行的html页面，当然它的用处肯定不止这些，web测试，页面截图，网络监控等等(详见官网文档)。
+
+解决步骤#
+
+Step.1 下载(编译)phantomjs文件#
+
+这里有两种方式：
+1.直接从官网下载对应系统编译好的可执行文件,解压后移动到bin目录下即可
+
+2.从官方Github下载源码后编译为可执行文件。
+
+我这里向大家介绍比较通用的法一：
+如图在官网下载对应你服务器系统的版本，
+
+￼file
+
+以CentOS为例，下载Linux 64-bit版本(32/64区分好)
+
+curl -O https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+解压文件
+
+tar xvf phantomjs-2.1.1-linux-x86_64.tar.bz2
+移动文件到bin目录下
+
+cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin
+到这里就phantomjs的install过程已完成，不过最好测试一下能否成功运行。
+随意写一个测试的js文件，运行下看是否成功
+
+phantomjs helloworld.js
+若是不成功，按提示安装缺失的libraries后再运行。
+若还是不行，可以尝试用法二来获取phantomjs文件。
+
+Step.2 通过PHP调用phantomjs#
+
+正常来说到这里的话，我们应该先用PHP获取到对应页面的URL，然后用phantomjs执行后，获取返回的内容，再对其进行正则匹配(替代了原来的curl操作)。
+我在Github发现了有朋友已经封装了一个基于PHP-phantomjs的包，还写了非常健全的文档，已为他献上Star。
+
+￼file
+
+由于文档是全英，我这里简单的介绍下关键步骤
+1) 通过 Composer 安装
+
+composer require "jonnyw/php-phantomjs:4.*"
+2) 初始化 JonnyW\PhantomJs\Client 类
+
+$client = Client::getInstance();
+//这一步非常重要，务必跟服务器的phantomjs文件路径一致
+$client->getEngine()->setPath('/usr/local/bin/phantomjs');
+3) 简单的使用
+
+$request  = $client->getMessageFactory()->createRequest();
+$response = $client->getMessageFactory()->createResponse();
+
+//设置请求方法
+$request->setMethod('GET');
+//设置请求连接
+$request->setUrl($link);
+//发送请求获取响应
+$client->send($request, $response);
+
+if($response->getStatus() === 200) {
+    //输出抓取内容
+    echo $response->getContent();
+    //获取内容后的处理
+}
+4) 加载完整JS的用法
+
+$client = Client::getInstance();
+$client->isLazy(); // 让客户端等待所有资源加载完毕
+
+$request = $client->getMessageFactory()->createRequest();
+$request->setTimeout(5000); // 设置超时时间(超过这个时间停止加载并渲染输出画面)
+
+......
+总结#
+
+最近在看《数学之美》的时候吴军博士在“图论和网络爬虫”一章中提过，如今的网页很多是用Javascript生成，在面对这些网页时，网络爬虫需要模拟浏览器去运行。
+我也是在看完这一章后对这个点有所印象，这次遇到类似问题就朝这个方向去解决了。希望能给大家带来一点帮助和启发。
+
+Contact me#
+
+如果有什么错误或者建议 OR 如果需要请教关于本主题的相关问题
+欢迎来邮与我交流和讨论！
+Email：atrovervan@gmail.com
+& My blog: ROVERVAN
+
+ 本帖已被设为精华帖！
+本帖由 Summer 于 8个月前 加精
+ 点赞
+                                                                            
+回复数量: 6
+时间 投票
+ Vanry
+Vanry
+#1 ⋅ 9个月前
+:thumbsup: 一直用phantomjs来抓取js渲染的网页 除了使用PHP-phantomjs包外 还可以借助symfony/process来运行命令行
+需要性能效率的话 还能借助server模块 搭建web服务 开多进程 用nginx作负载均衡
+
+ hainuo
+hainuo
+#2 ⋅ 8个月前 ⋅ via  iOS 客户端
+想问一下为什么很少人用v8js扩展呢？
+
+ Vanry
+Vanry
+#3 ⋅ 6个月前
+@hainuo v8js和浏览器的环境变量不同
+
+ 青春不是年华
+青春不是年华
+#4 ⋅ 6个月前
+
+public function test(){
+        $client = Client::getInstance();
+        $client->getEngine()->setPath('/usr/local/bin/phantomjs');
+        $request  = $client->getMessageFactory()->createRequest();
+        $response = $client->getMessageFactory()->createResponse();
+
+        $request->setMethod('GET');
+        $request->setUrl('http://www.baidu.com');
+
+        $client->send($request, $response);
+
+        if($response->getStatus() === 200) {
+            echo $response->getContent();
+        }
+    }
+Error when executing PhantomJs procedure - Undefined variable: pipes
+报这个错，不知道是什么原因？
+
+ Clarencep
+Clarencep
+#5 ⋅ 6个月前
+哎，都用phantomjs了，为啥不直接编写js脚本呢.
+
+ chongyi
+VIP
+chongyi
+#6 ⋅ 6个月前
+@Clarencep 是的，我觉得这样的话不如直接用 nodeJS 了。。。
+
+请注意单词拼写，以及中英文排版，参考此页
+支持 Markdown 格式, **粗体**、~~删除线~~、`单行代码`, 更多语法请见这里 Markdown 语法
+支持表情，使用方法请见 Emoji 自动补全来咯，可用的 Emoji 请见 :metal: :point_right: Emoji 列表  :star: :sparkles:
+上传图片, 支持拖拽和剪切板黏贴上传, 格式限制 - jpg, png, gif
+发布框支持本地存储功能，会在内容变更时保存，「提交」按钮点击时清空
+   请勿发布不友善或者负能量的内容。与人为善，比聪明更重要！
+
+需要登录后才能发表评论.
+回复 Ctrl+Enter
+作者：RoverVan
+ 
+
+RoverVan 的其他话题
+PHP 爬取需要运行 JS 的页面 (Run JS While Grabing Web Page With PHP)
+分类下其他话题
+代码分享： App (Guard::class)->check () ? 0 : 1; 【喜大普奔】macOS High Sierra 自带 PHP 7.1.7 ,Apache 2.4.27 Laravel 非官方中文站
+ 
+
+
+推荐资源
+  Laravel 中文文档  Laravel 速查表  Laravel 软件外包服务  PHP 之道 - PHPer 必读  Composer 中文全量镜像  Laravel 扩展包 Top100
+  优帆远扬 - 创造不息，交付不止
+ 建议反馈？请私信 Summer
+我们是高品质的 Laravel 开发者社区，致力于为 Laravel 开发者提供一个分享创造、结识伙伴、协同互助的平台。
+
+    
+
+Powered by PHPHub 
+Designed by ❤ Summer
+赞助商
+
+   
+统计信息
+
+社区会员: 19204
+话题数: 5499
+评论数: 30877
+其他信息
+
+ 推荐网站
+ 关于我们
+ 名人堂
+ 软件外包服务无标题文档
+
+
+
+

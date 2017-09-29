@@ -1,3 +1,8 @@
 wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh
 chmod +x shadowsocks-all.sh
 ./shadowsocks-all.sh 2>&1 | tee shadowsocks-all.log
+
+
+
+utuntu 
+sudo ./client_linux_amd64 -l :12948 --r 67.209.186.206:38989 --key kongliu --crypt aes --mtu 1350 --sndwnd 256 --rcvwnd 2048 --mode fast3 --conn 10 &
