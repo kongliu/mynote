@@ -26,3 +26,14 @@ http_proxy=http://localhost:8123 curl www.google.com
 http_proxy=http://localhost:8123 wget www.google.com
 或者换一个软件源
 apm config set registry http://registry.npm.taobao.org
+
+常用插件remote-ftp
+atom-beautify
+atom-braket-highlight
+docblockr
+emmet
+highlight-selected
+hyperclick
+php-hyperclick
+sublime-block-comment
+symbols-tree-view

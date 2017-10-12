@@ -15,3 +15,6 @@ sudo service php7.0-fpm-sp restart
 
 
 杀死进程gnome-system-monitor
+
+kcptun
+sudo ./client_linux_amd64 -l :12948 --r 67.209.186.206:38989 --key kongliu --crypt aes --mtu 1350 --sndwnd 256 --rcvwnd 2048 --mode fast3 --conn 10 &
