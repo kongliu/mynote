@@ -1,31 +1,16 @@
-设置代理的时候 因为socks5本身并不是http代理 所以先要转换成http
-
-Convert Shadowsocks into an HTTP proxy
-clowwindy edited this page on 5 Aug 2013 · 3 revisions
- Pages 33
-Download
-Tutorial
-Wiki
-Troubleshooting
-Clone this wiki locally
-
-
-https://github.com/shadowsocks/shadowsocks.wiki.git
-
-First run polipo with parent proxy set to Shadowsocks:
-
-apt-get install polipo
-service polipo stop
-polipo socksParentProxy=localhost:1080
-Then you can play with the HTTP proxy:
-
-http_proxy=http://localhost:8123 apt-get update
-
-http_proxy=http://localhost:8123 curl www.google.com
-
-http_proxy=http://localhost:8123 wget www.google.com
-或者换一个软件源
-apm config set registry http://registry.npm.taobao.org
+﻿安装git
+安装atom
+安装nodejs(选中写入path选项)
+进入C://user/当前用户目录/.atom/packages/
+当前目录打开gitbash 
+先配置镜像
+npm config set registry https://registry.npm.taobao.org
+然后在atom中搜索该插件的repo 在github中复制地址 然后 
+git clone 该地址 
+进入clone到的文件夹中 
+npm isntall
+cd ..
+继续下一个插件的操作
 
 常用插件remote-ftp
 atom-beautify
